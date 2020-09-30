@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SuperService_BackEnd\SuperService_BackEnd.csproj" />
+  </ItemGroup>
+
 </Project>
