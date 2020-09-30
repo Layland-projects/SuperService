@@ -1,4 +1,5 @@
 ﻿using SuperService_BackEnd.Models;
+using SuperService_FrontEnd.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,23 +15,37 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SuperService_FrontEnd
+namespace SuperService_FrontEnd.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public User LoggedInUser { get; private set; }
+        public string WelcomeMessage { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
         }
+
         public MainWindow(User user)
         {
-            LoggedInUser = user;
-            InitializeComponent();
+            WelcomeMessage = $"Welcome back, {user.GetFullName()}";
             DataContext = this;
+            InitializeComponent();
+        }
+
+        private void btnStock_Click(object sender, RoutedEventArgs e)
+        {
+            _frame.Navigate(new Stock());
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            var login = new Login();
+            App.Current.MainWindow = login;
+            this.Close();
+            login.Show();
         }
     }
 }
