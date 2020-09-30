@@ -18,5 +18,29 @@ namespace SuperService_BusinessLayer
         {
             return _serv.GetAllIngredients().Distinct(new IngredientSameNameComparer()).OrderBy(x => x.Name);
         }
+
+        public Ingredient GetIngredientByID(int id) => _serv.GetIngredientByID(id);
+        public IEnumerable<Ingredient> GetIngredientsByName(string name) => _serv.GetIngredientsByName(name);
+
+        public void AddNewIngredient(Ingredient ingredient)
+        {
+            _serv.AddNewIngredient(ingredient);
+        }
+
+        public void RemoveIngredient(Ingredient ingredient)
+        {
+            _serv.RemoveIngredient(ingredient);
+        }
+
+        public void UpdateIngredient(Ingredient ingredient)
+        {
+            _serv.UpdateIngredient(ingredient);
+        }
+
+        public Ingredient UndoIngredientChanges(Ingredient ingredient)
+        {
+            _serv.RecycleConnection();
+            return _serv.GetIngredientByID(ingredient.IngredientID);
+        }
     }
 }

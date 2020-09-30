@@ -35,7 +35,6 @@ namespace SuperService_FrontEnd.Windows
         {
             var cb = sender as ComboBox;
             _user = (User)cb.SelectedItem;
-
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
