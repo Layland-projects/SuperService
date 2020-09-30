@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperService_BackEnd.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace SuperService_FrontEnd
     /// </summary>
     public partial class MainWindow : Window
     {
+        public User LoggedInUser { get; private set; }
         public MainWindow()
         {
             InitializeComponent();
+        }
+        public MainWindow(User user)
+        {
+            LoggedInUser = user;
+            InitializeComponent();
+            DataContext = this;
         }
     }
 }
