@@ -19,7 +19,7 @@ namespace SuperService_BackEnd.Models
         [Required]
         public string Password { get; set; }
         public string Email { get; set; }
-        //public int UserTypeID { get; set; }
         public virtual UserType UserType { get; set; }
+        public string GetFullName() => $"{Title.Trim()} {FirstName.Trim()} {LastName.Trim()}";
     }
 }

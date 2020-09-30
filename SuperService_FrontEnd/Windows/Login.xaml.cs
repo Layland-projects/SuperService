@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace SuperService_FrontEnd
+namespace SuperService_FrontEnd.Windows
 {
     /// <summary>
     /// Interaction logic for Login.xaml
@@ -35,7 +35,6 @@ namespace SuperService_FrontEnd
         {
             var cb = sender as ComboBox;
             _user = (User)cb.SelectedItem;
-
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
