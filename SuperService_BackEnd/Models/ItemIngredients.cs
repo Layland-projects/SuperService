@@ -11,9 +11,7 @@ namespace SuperService_BackEnd.Models
     {
         [Key]
         public int ItemIngredientID { get; set; }
-        //public int ItemID { get; set; }
         public virtual Item Item { get; set; }
-        //public int IngredientID { get; set; }
         public virtual Ingredient Ingredient { get; set; }
     }
 }
