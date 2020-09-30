@@ -86,7 +86,7 @@
             
         </Button>
         <Button x:Name="btnUndo" Content="Undo" Grid.Column="4" Grid.Row="9"
-                Width="80" IsEnabled="False">
+                 Click="btnUndo_Click" Width="80" IsEnabled="False">
 
         </Button>
     </Grid>

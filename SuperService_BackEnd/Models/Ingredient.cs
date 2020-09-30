@@ -17,7 +17,12 @@ namespace SuperService_BackEnd.Models
         public double Sugar { get; set; }
         public double Carbohydrates { get; set; }
         public double Salt { get; set; }
-        public int NumberInStock { get; set; }
+        int _numberInStock;
+        public int NumberInStock 
+        {
+            get => _numberInStock;
+            set => _numberInStock = value >= 0 ? value : 0;
+        }
         public bool IsInStock => NumberInStock > 0;
         public ICollection<ItemIngredients> ItemIngredients { get; set; }
     }

@@ -23,7 +23,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <ListView Grid.Column="1" Grid.Row="1" MaxWidth="200" ItemsSource="{Binding Ingredients}"
+        <ListView x:Name="_stockList" Grid.Column="1" Grid.Row="1" MaxWidth="200" ItemsSource="{Binding Ingredients}"
                   SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemContainerStyle>
                 <Style>
