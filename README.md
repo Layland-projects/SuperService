@@ -49,18 +49,35 @@ The project goal is to create a software solution for table service restaurants.
 
 #### <u>Tickets</u>
 
-| Sprint backlog                                               | In progress | Review                                                       | Done |
-| ------------------------------------------------------------ | ----------- | ------------------------------------------------------------ | ---- |
-| [Update README](https://github.com/Layland-projects/SuperService/projects/1#card-46524252) |             | [Create Repo](https://github.com/Layland-projects/SuperService/projects/1#card-46458226) |      |
-|                                                              |             | [Create solution](https://github.com/Layland-projects/SuperService/projects/1#card-46458836) |      |
-|                                                              |             | [Implement CodeFirst DB](https://github.com/Layland-projects/SuperService/projects/1#card-46458920) |      |
-|                                                              |             | [Setup user types - Admin](https://github.com/Layland-projects/SuperService/projects/1#card-46458342) |      |
-|                                                              |             | [System access - Login(Basic)](https://github.com/Layland-projects/SuperService/projects/1#card-46481259) |      |
-|                                                              |             | [System access - Logout](https://github.com/Layland-projects/SuperService/projects/1#card-46481356) |      |
-|                                                              |             | [Create stock system - view ingredients](https://github.com/Layland-projects/SuperService/projects/1#card-46459182) |      |
-|                                                              |             | [Crete stock system - update count](https://github.com/Layland-projects/SuperService/projects/1#card-46459079) |      |
-|                                                              |             | [Epic - Create stock system](https://github.com/Layland-projects/SuperService/projects/1#card-46458992) |      |
-|                                                              |             | [Create class diagrams](https://github.com/Layland-projects/SuperService/projects/1#card-46524355) |      |
+All tickets were in the backlog at the beginning but have all been successfully implemented for this sprints increment along with accompanying tests.
+
+| Sprint backlog | In progress | Review | Done                                                         |
+| -------------- | ----------- | ------ | ------------------------------------------------------------ |
+|                |             |        | [Create Repo](https://github.com/Layland-projects/SuperService/projects/1#card-46458226) |
+|                |             |        | [Create solution](https://github.com/Layland-projects/SuperService/projects/1#card-46458836) |
+|                |             |        | [Implement CodeFirst DB](https://github.com/Layland-projects/SuperService/projects/1#card-46458920) |
+|                |             |        | [Setup user types - Admin](https://github.com/Layland-projects/SuperService/projects/1#card-46458342) |
+|                |             |        | [System access - Login(Basic)](https://github.com/Layland-projects/SuperService/projects/1#card-46481259) |
+|                |             |        | [System access - Logout](https://github.com/Layland-projects/SuperService/projects/1#card-46481356) |
+|                |             |        | [Create stock system - view ingredients](https://github.com/Layland-projects/SuperService/projects/1#card-46459182) |
+|                |             |        | [Crete stock system - update count](https://github.com/Layland-projects/SuperService/projects/1#card-46459079) |
+|                |             |        | [Epic - Create stock system](https://github.com/Layland-projects/SuperService/projects/1#card-46458992) |
+|                |             |        | [Create class diagrams](https://github.com/Layland-projects/SuperService/projects/1#card-46524355) |
+|                |             |        | [Update README](https://github.com/Layland-projects/SuperService/projects/1#card-46524252) |
+
+#### <u>Retrospective</u>
+
+##### What went well
+
+I think my initial estimation for the workload for the sprint went well.
+
+##### What could have gone better?
+
+I think I should've stayed on top of any documentation updates after each ticket rather than having to make a separate task to catch up.
+
+##### What to try next?
+
+I'm interested to try and implement a type of scrum poker with a scoring system for each ticket.
 
 
 
