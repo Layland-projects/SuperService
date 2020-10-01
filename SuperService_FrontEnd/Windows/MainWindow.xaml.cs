@@ -39,6 +39,10 @@ namespace SuperService_FrontEnd.Windows
         {
             _frame.Navigate(new Stock());
         }
+        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            _frame.Navigate(new NewOrder());
+        }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -47,5 +51,6 @@ namespace SuperService_FrontEnd.Windows
             this.Close();
             login.Show();
         }
+
     }
 }
