@@ -1,5 +1,3 @@
-[TOC]
-
 # Super service
 
 The project goal is to create a software solution for table service restaurants.
