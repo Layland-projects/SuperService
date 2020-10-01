@@ -1,3 +1,5 @@
+[TOC]
+
 # Super service
 
 The project goal is to create a software solution for table service restaurants.
@@ -23,6 +25,8 @@ The project goal is to create a software solution for table service restaurants.
 * A way of tracking amount of menu items already prepped for ETA's
 * Request shipment ability when managing stock
 
+## Diagrams
+
 ### Login System
 
 ![Login Diagram](https://raw.githubusercontent.com/Layland-projects/SuperService/master/ReadmeContent/LoginSystemDiagram.png?token=AQP5ED3OJOZA4ZQUVMVINJS7OWTL6)
@@ -44,6 +48,8 @@ The project goal is to create a software solution for table service restaurants.
 * Implement a stock system
   * Should be able to view all ingredients
   * Should be able to update stock counter on ingredients
+
+#### <u>Tickets</u>
 
 | Sprint backlog                                               | In progress | Review                                                       | Done |
 | ------------------------------------------------------------ | ----------- | ------------------------------------------------------------ | ---- |
