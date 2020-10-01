@@ -9,6 +9,7 @@ namespace SuperService_BackEnd.Models
     {
         [Key]
         public int ID { get; set; }
+        public int NumberOfSeats { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
     }
 }
