@@ -28,6 +28,7 @@ namespace SuperService_FrontEnd.Pages
     {
         bool _isBuildingOrder;
         Order _newOrder;
+        OrderHelper _oHelper;
         ItemHelper _iHelper;
         TableHelper _tHelper;
         ICollection<Item> _itemsOrdered;
@@ -48,6 +49,7 @@ namespace SuperService_FrontEnd.Pages
             _newOrder = new Order();
             _iHelper = new ItemHelper();
             _tHelper = new TableHelper();
+            _oHelper = new OrderHelper();
             MenuItems = _iHelper.GetAllItemsOrderedByAvailability().ToList();
             ItemsOrdered = new List<Item>();
             Tables = _tHelper.GetAllTablesOrderedByNumber().ToList();
@@ -81,12 +83,31 @@ namespace SuperService_FrontEnd.Pages
 
         private void btnPlaceOrder_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_newOrder.Table == null)
+            {
+                MessageBox.Show("Please select a table", "Warning");
+            }
+            else
+            {
+                _oHelper.AddNewOrder(_newOrder, ItemsOrdered);
+                MessageBox.Show("Order placed!", "Success");
+                _isBuildingOrder = false;
+                ClearSelection();
+            }
         }
 
         private void btnUndo_Click(object sender, RoutedEventArgs e)
         {
+            _isBuildingOrder = false;
+            ClearSelection();
+        }
 
+        private void ClearSelection()
+        {
+            ItemsOrdered = new List<Item>();
+            cbTables.SelectedItem = null;
+            Menu.SelectedItem = null;
+            ToggleEditMode();
         }
 
         private void ToggleEditMode()
