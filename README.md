@@ -25,7 +25,7 @@ The project goal is to create a software solution for table service restaurants.
 
 ### Login System
 
-![Login Diagram](https://raw.githubusercontent.com/Layland-projects/SuperService/master/ReadmeContent/LoginSystemDiagram.png?token=AQP5ED3OJOZA4ZQUVMVINJS7OWTL6)
+![Login Diagram](https://github.com/Layland-projects/SuperService/blob/master/ReadmeContent/LoginSystemDiagram.png?raw=true)
 
 ### Order System
 
