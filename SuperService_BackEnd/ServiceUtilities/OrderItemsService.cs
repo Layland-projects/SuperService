@@ -9,32 +9,38 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class OrderItemsService
     {
-        SuperServiceContext _db;
-        public OrderItemsService(SuperServiceContext db)
-        {
-            _db = db;
-        }
         public void AddNewOrderItem(OrderItems orderItem)
         {
-            _db.OrderItems.Add(orderItem);
-            _db.SaveChanges();
+            using (var db = new SuperServiceContext())
+            {
+                db.OrderItems.Attach(orderItem);
+                db.Entry(orderItem).State = EntityState.Added;
+                db.SaveChanges();
+            }
         }
         public void AddNewOrderItems(IEnumerable<OrderItems> orderItems)
         {
-
-            foreach (var item in orderItems)
+            using (var db = new SuperServiceContext())
             {
-                _db.Attach(item);
-                _db.Entry(item).State = EntityState.Added;
-                _db.SaveChanges();
+                foreach (var item in orderItems)
+                {
+                    AddNewOrderItem(item);
+                    //db.OrderItems.Attach(item);
+                    //db.Entry(item).State = EntityState.Added;
+                    //db.SaveChanges();
+                }
+
             }
 
         }
 
         public void DeleteOrderItemsByOrderID(int orderID)
         {
-            _db.RemoveRange(_db.OrderItems.Include(x => x.Order).Where(x => x.Order.OrderID == orderID));
-            _db.SaveChanges();
+            using (var db = new SuperServiceContext())
+            {
+                db.RemoveRange(db.OrderItems.Include(x => x.Order).Where(x => x.Order.OrderID == orderID));
+                db.SaveChanges();
+            }
         }
     }
 }

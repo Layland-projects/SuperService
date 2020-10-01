@@ -12,7 +12,7 @@ namespace SuperService_BusinessLayer
 {
     public class IngredientHelper
     {
-        IngredientService _serv = new IngredientService(new SuperServiceContext());
+        IngredientService _serv = new IngredientService();
 
         public IEnumerable<Ingredient> GetAllIngredientsWithDistinctNames()
         {
@@ -39,7 +39,6 @@ namespace SuperService_BusinessLayer
 
         public Ingredient UndoIngredientChanges(Ingredient ingredient)
         {
-            _serv.RecycleConnection();
             return _serv.GetIngredientByID(ingredient.IngredientID);
         }
     }

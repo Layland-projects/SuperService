@@ -10,28 +10,38 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class OrderService
     {
-        SuperServiceContext _db;
-        public OrderService(SuperServiceContext db)
+        public IEnumerable<Order> GetOrdersByTableNumber(int number)
         {
-            _db = db;
+            using (var db = new SuperServiceContext())
+            {
+                return db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
+            }
         }
-
-        public IEnumerable<Order> GetOrdersByTableNumber(int number) => _db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number);
-        public IEnumerable<Order> GetOrdersByTableID(int id) => _db.Orders.Include(x => x.Table).Where(x => x.Table.ID == id);
+        public IEnumerable<Order> GetOrdersByTableID(int id) 
+        {
+            using (var db = new SuperServiceContext())
+            {
+                return db.Orders.Include(x => x.Table).Where(x => x.Table.ID == id).ToList();
+            }
+        }
 
         public void AddNewOrder(Order order)
         {
-            _db.Attach(order);
-            _db.Entry(order).State = EntityState.Added;
-            _db.SaveChanges();
+            using (var db = new SuperServiceContext())
+            {
+                db.Attach(order);
+                db.Entry(order).State = EntityState.Added;
+                db.SaveChanges();
+            }
         }
         public void DeleteOrder(Order order)
         {
-            var orderItemsForOrderID = _db.OrderItems.Include(x => x.Order).Where(x => x.Order.OrderID == order.OrderID).ToList();
-            var ordersForId = _db.Orders.Where(x => x.OrderID == order.OrderID).ToList();
-            _db.OrderItems.RemoveRange(orderItemsForOrderID);    
-            _db.Orders.RemoveRange(order);
-            _db.SaveChanges();  
+            using (var db = new SuperServiceContext())
+            {
+                var ordersForId = db.Orders.Where(x => x.OrderID == order.OrderID).ToList();
+                db.Orders.RemoveRange(ordersForId);
+                db.SaveChanges();
+            }
         }
 
     }

@@ -5,49 +5,60 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SuperService_BackEnd.ServiceUtilities
 {
     public class IngredientService
     {
-        SuperServiceContext _db;
-        public IngredientService(SuperServiceContext db)
+        public IEnumerable<Ingredient> GetAllIngredients()
         {
-            _db = db;
+            using (var db = new SuperServiceContext())
+            {
+                return db.Ingredients.ToList();
+            }
         }
-        public IEnumerable<Ingredient> GetAllIngredients() => _db.Ingredients;
-        public Ingredient GetIngredientByID(int id) => _db.Ingredients.Where(x => x.IngredientID == id).FirstOrDefault();
-        public IEnumerable<Ingredient> GetIngredientsByName(string name) => _db.Ingredients.Where(x => x.Name == name);
-        public void RecycleConnection() => _db = new SuperServiceContext();
+        public Ingredient GetIngredientByID(int id) => GetAllIngredients().Where(x => x.IngredientID == id).FirstOrDefault(); 
+
+        public IEnumerable<Ingredient> GetIngredientsByName(string name) => GetAllIngredients().Where(x => x.Name == name);
 
         public void AddNewIngredient(Ingredient ingredient)
         {
-            _db.Ingredients.Add(ingredient);
-            _db.SaveChanges();
+            using (var db = new SuperServiceContext())
+            {
+                db.Ingredients.Add(ingredient);
+                db.SaveChanges();
+            }
         }
 
         public void RemoveIngredient(Ingredient ingredient)
         {
-            var dbIngredient = _db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
-            if (dbIngredient != null)
+            using (var db = new SuperServiceContext())
             {
-                _db.Ingredients.Remove(dbIngredient);
-                _db.SaveChanges();
+                var dbIngredient = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+                if (dbIngredient != null)
+                {
+                    db.Ingredients.Remove(dbIngredient);
+                    db.SaveChanges();
+                }
             }
         }
 
         public void UpdateIngredient(Ingredient ingredient)
         {
-            var ingredientInDb = GetIngredientByID(ingredient.IngredientID);
-            foreach (var prop in ingredient.GetType().GetProperties())
+            using (var db = new SuperServiceContext())
             {
-                if (prop.Name != "IngredientID" && prop.CanWrite)
+                var ingredientInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+                foreach (var prop in ingredient.GetType().GetProperties())
                 {
-                    prop.SetValue(ingredientInDb, prop.GetValue(ingredient));
+                    if (prop.Name != "IngredientID" && prop.CanWrite)
+                    {
+                        prop.SetValue(ingredientInDb, prop.GetValue(ingredient));
+                    }
                 }
+                db.SaveChanges();
             }
-            _db.SaveChanges();
         }
     }
 }

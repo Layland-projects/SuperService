@@ -10,11 +10,11 @@ namespace SuperService_BusinessLayer
 {
     public class OrderHelper
     {
-        OrderService _oService = new OrderService(new SuperServiceContext());
-        OrderItemsService _oIService = new OrderItemsService(new SuperServiceContext());
+        OrderService _oService = new OrderService();
+        OrderItemsService _oIService = new OrderItemsService();
 
-        public IEnumerable<Order> GetOrdersByTableNumber(int number) => _oService.GetOrdersByTableNumber(number);
-        public IEnumerable<Order> GetOrderByTableID(int id) => _oService.GetOrdersByTableID(id);
+        public IEnumerable<Order> GetOrdersByTableNumberList(int number) => _oService.GetOrdersByTableNumber(number);
+        public IEnumerable<Order> GetOrderByTableIDList(int id) => _oService.GetOrdersByTableID(id);
 
         public void AddNewOrder(Order order, IEnumerable<Item> items)
         {
@@ -22,13 +22,14 @@ namespace SuperService_BusinessLayer
             List<OrderItems> orderItems = new List<OrderItems>();
             foreach (var item in items)
             {
-                orderItems.Add(new OrderItems { Item = item, Order = order });
+                orderItems.Add(new OrderItems { ItemID = item.ItemID, OrderID = order.OrderID });
             }
             _oIService.AddNewOrderItems(orderItems);
         }
 
         public void DeleteOrder(Order order)
         {
+            _oIService.DeleteOrderItemsByOrderID(order.OrderID);
             _oService.DeleteOrder(order);
         }
     }

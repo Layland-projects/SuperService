@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperService_BackEnd;
 
 namespace SuperService_BackEnd.Migrations
 {
     [DbContext(typeof(SuperServiceContext))]
-    partial class SuperServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201001203133_altered_orderItems_model_to_get_FKs")]
+    partial class altered_orderItems_model_to_get_FKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

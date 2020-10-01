@@ -9,31 +9,56 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class TableService
     {
-        SuperServiceContext _db;
-        public TableService(SuperServiceContext db)
+        public IEnumerable<Table> GetAllTables()
         {
-            _db = db;
+            using (var db = new SuperServiceContext())
+            {
+                return db.Tables.ToList();
+            }
         }
-        public IEnumerable<Table> GetAllTables() => _db.Tables;
-        public Table GetTableByID(int id) => _db.Tables.Where(x => x.ID == id).FirstOrDefault();
-        public Table GetTableByTableNumber(int tableNumber) => _db.Tables.Where(x => x.TableNumber == tableNumber).FirstOrDefault();
+        public Table GetTableByID(int id)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                return db.Tables.Where(x => x.ID == id).FirstOrDefault();
+            }
+        }
+        public Table GetTableByTableNumber(int tableNumber)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                return db.Tables.Where(x => x.TableNumber == tableNumber).FirstOrDefault();
+            }
+        }
 
         public void AddNewTable(Table table)
         {
-            _db.Tables.Add(table);
-            _db.SaveChanges();
+            using (var db = new SuperServiceContext())
+            {
+                db.Tables.Add(table);
+                db.SaveChanges();
+            }
         }
 
         public void DeleteTableByTableNumber(int number)
         {
-            var ordersForTable = _db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
-            foreach (var entry in ordersForTable)
+            using (var db = new SuperServiceContext())
             {
-                _db.Orders.Remove(entry);
-                _db.SaveChanges();
+                var orderItemsForOrder = db.OrderItems.Include(x => x.Order).ThenInclude(x => x.Table).Where(x => x.Order.Table.TableNumber == number).ToList();
+                foreach(var entry in orderItemsForOrder)
+                {
+                    db.OrderItems.Remove(entry);
+                    db.SaveChanges();
+                }
+                var ordersForTable = db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
+                foreach (var entry in ordersForTable)
+                {
+                    db.Orders.Remove(entry);
+                    db.SaveChanges();
+                }
+                db.Tables.RemoveRange(db.Tables.Where(x => x.TableNumber == number));
+                db.SaveChanges();
             }
-            _db.Tables.RemoveRange(_db.Tables.Where(x => x.TableNumber == number));
-            _db.SaveChanges();
         }
     }
 }

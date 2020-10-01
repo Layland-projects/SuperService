@@ -9,14 +9,17 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class ItemService
     {
-        SuperServiceContext _db;
-        public ItemService(SuperServiceContext db)
+        public IEnumerable<Item> GetAllItems()
         {
-            _db = db;
+            using (var db = new SuperServiceContext())
+            {
+                return db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).ToList();
+            }
         }
 
-        public IEnumerable<Item> GetAllItems() => _db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient);
-
-        public Item GetItemByID(int id) => GetAllItems().Where(x => x.ItemID == id).FirstOrDefault();
+        public Item GetItemByID(int id)
+        {
+            return GetAllItems().Where(x => x.ItemID == id).FirstOrDefault();
+        }
     }
 }
