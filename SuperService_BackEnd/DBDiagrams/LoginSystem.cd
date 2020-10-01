@@ -16,6 +16,9 @@
       <HashCode>AAAAACAAAAAgAAACAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\UserType.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Users" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
