@@ -12,5 +12,15 @@ namespace SuperService_BusinessLayer
     {
         TableService _serv = new TableService(new SuperServiceContext());
         public IEnumerable<Table> GetAllTablesOrderedByNumber() => _serv.GetAllTables().OrderBy(x => x.TableNumber);
+        public Table GetTableByID(int id) => _serv.GetTableByID(id);
+        public Table GetTableByTableNumber(int number) => _serv.GetTableByTableNumber(number);
+        public void DeleteTableByTableNumber(int number) => _serv.DeleteTableByTableID(number);
+        public void AddNewTable(Table table)
+        {
+            if (GetTableByTableNumber(table.TableNumber) == null)
+            {
+                _serv.AddNewTable(table);
+            }
+        }
     }
 }

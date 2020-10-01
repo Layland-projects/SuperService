@@ -13,6 +13,8 @@
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -34,14 +36,18 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ComboBox Name="cbTables" ItemsSource="{Binding Path=Tables}" Grid.Column="2" Grid.Row="1" Margin="0, 2, 0, 2">
+        <ComboBox Name="cbTables" ItemsSource="{Binding Path=Tables}" Grid.Column="2" Grid.Row="1" Margin="0, 2, 0, 2"
+                  SelectionChanged="cbTables_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Path=TableNumber}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ListView x:Name="Order" ItemsSource="{Binding Path=ItemsOrdered}" Grid.Column="2" Grid.Row="2" Grid.RowSpan="2">
+        <Button x:Name="btnPlaceOrder" Content="Place order" Click="btnPlaceOrder_Click" Grid.Column="3" Grid.Row="1" MinWidth="80" Margin="2" IsEnabled="False"/>
+        <Button x:Name="btnUndo" Content="Undo" Click="btnUndo_Click" Grid.Column="4" Grid.Row="1" MinWidth="80" Margin="2, 2, 0, 2" IsEnabled="False"/>
+        <ListView x:Name="Order" ItemsSource="{Binding Path=ItemsOrdered}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2"
+                  MouseDoubleClick="Order_MouseDoubleClick">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>

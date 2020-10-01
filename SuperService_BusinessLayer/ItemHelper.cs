@@ -12,5 +12,6 @@ namespace SuperService_BusinessLayer
     {
         ItemService _serv = new ItemService(new SuperServiceContext());
         public IEnumerable<Item> GetAllItemsOrderedByAvailability() => _serv.GetAllItems().OrderBy(x => x.CanOrder).ThenBy(x => x.Name);
+        public Item GetItemByID(int id) => _serv.GetItemByID(id);
     }
 }

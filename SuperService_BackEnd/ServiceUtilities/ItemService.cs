@@ -2,6 +2,7 @@
 using SuperService_BackEnd.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace SuperService_BackEnd.ServiceUtilities
@@ -16,5 +17,6 @@ namespace SuperService_BackEnd.ServiceUtilities
 
         public IEnumerable<Item> GetAllItems() => _db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient);
 
+        public Item GetItemByID(int id) => GetAllItems().Where(x => x.ItemID == id).FirstOrDefault();
     }
 }
