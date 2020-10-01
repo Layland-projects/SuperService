@@ -1,4 +1,5 @@
-﻿using SuperService_BackEnd.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperService_BackEnd.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,14 @@ namespace SuperService_BackEnd.ServiceUtilities
             _db.SaveChanges();
         }
 
-        public void DeleteTableByTableID(int number)
+        public void DeleteTableByTableNumber(int number)
         {
+            var ordersForTable = _db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
+            foreach (var entry in ordersForTable)
+            {
+                _db.Orders.Remove(entry);
+                _db.SaveChanges();
+            }
             _db.Tables.RemoveRange(_db.Tables.Where(x => x.TableNumber == number));
             _db.SaveChanges();
         }

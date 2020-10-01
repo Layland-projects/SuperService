@@ -14,7 +14,7 @@ namespace SuperService_BusinessLayer
         public IEnumerable<Table> GetAllTablesOrderedByNumber() => _serv.GetAllTables().OrderBy(x => x.TableNumber);
         public Table GetTableByID(int id) => _serv.GetTableByID(id);
         public Table GetTableByTableNumber(int number) => _serv.GetTableByTableNumber(number);
-        public void DeleteTableByTableNumber(int number) => _serv.DeleteTableByTableID(number);
+        public void DeleteTableByTableNumber(int number) => _serv.DeleteTableByTableNumber(number);
         public void AddNewTable(Table table)
         {
             if (GetTableByTableNumber(table.TableNumber) == null)

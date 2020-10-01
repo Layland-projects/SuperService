@@ -21,6 +21,14 @@ namespace SuperService_BusinessLayer.Tests
         [SetUp]
         public void SetUp()
         {
+            //if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
+            //{
+            //    var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
+            //    foreach (var o in oList)
+            //    {
+            //        oHelper.DeleteOrder(o);
+            //    }
+            //}
             if (tHelper.GetTableByTableNumber(1000) != null)
             {
                 tHelper.DeleteTableByTableNumber(1000);
@@ -31,13 +39,6 @@ namespace SuperService_BusinessLayer.Tests
                 NumberOfSeats = 1,
             });
             table = tHelper.GetTableByTableNumber(1000);
-            if (oHelper.GetOrdersByTableID(table.ID).Count() > 0)
-            {
-                foreach (var o in oHelper.GetOrdersByTableID(table.ID))
-                {
-                    oHelper.DeleteOrder(o);
-                }
-            }
             order = new Order { Table = table };
             items = new List<Item>
             {
@@ -49,13 +50,14 @@ namespace SuperService_BusinessLayer.Tests
         [TearDown]
         public void TearDown()
         {
-            if (oHelper.GetOrdersByTableID(table.ID).Count() > 0)
-            {
-                foreach (var o in oHelper.GetOrdersByTableID(table.ID))
-                {
-                    oHelper.DeleteOrder(o);
-                }
-            }
+            //if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
+            //{
+            //    var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
+            //    foreach(var o in oList)
+            //    {
+            //        oHelper.DeleteOrder(o);
+            //    }
+            //}
             if (tHelper.GetTableByTableNumber(1000) != null)
             {
                 tHelper.DeleteTableByTableNumber(1000);
@@ -66,13 +68,23 @@ namespace SuperService_BusinessLayer.Tests
         public void AddNewOrderTest()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrderByTableID(table.ID).Count() == 1);
         }
 
         [Test]
         public void DeleteOrderTest()
         {
-            Assert.Fail();
+            oHelper.AddNewOrder(order, items);
+            Assert.IsTrue(oHelper.GetOrderByTableID(table.ID).Count() == 1);
+            oHelper.DeleteOrder(order); // for some reason this stops me from being able to add more orderItems, need to figure out why
+            Assert.IsTrue(oHelper.GetOrderByTableID(table.ID).Count() == 0);
+        }
+
+        [Test]
+        public void GetOrdersByTableNumberTest()
+        {
+            oHelper.AddNewOrder(order, items);
+            Assert.IsTrue(oHelper.GetOrdersByTableNumber(1000).Count() > 0);
         }
     }
 }

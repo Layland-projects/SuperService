@@ -21,11 +21,14 @@ namespace SuperService_BackEnd.ServiceUtilities
         }
         public void AddNewOrderItems(IEnumerable<OrderItems> orderItems)
         {
+
             foreach (var item in orderItems)
             {
-                _db.OrderItems.Add(item);
+                _db.Attach(item);
+                _db.Entry(item).State = EntityState.Added;
                 _db.SaveChanges();
             }
+
         }
 
         public void DeleteOrderItemsByOrderID(int orderID)
