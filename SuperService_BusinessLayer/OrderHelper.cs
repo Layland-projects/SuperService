@@ -18,6 +18,14 @@ namespace SuperService_BusinessLayer
 
         public void AddNewOrder(Order order, IEnumerable<Item> items)
         {
+            if (order.Table == null)
+            {
+                throw new ArgumentException("order must contain a Table");
+            }
+            if (items.Count() == 0)
+            {
+                throw new ArgumentException("items must contain at least one Item");
+            }
             _oService.AddNewOrder(order);
             List<OrderItems> orderItems = new List<OrderItems>();
             foreach (var item in items)

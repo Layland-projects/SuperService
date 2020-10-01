@@ -72,6 +72,18 @@ namespace SuperService_BusinessLayer.Tests
         }
 
         [Test]
+        public void AddNewOrderTest_WithEmptyOrder()
+        {
+            Assert.Throws<ArgumentException>(() => oHelper.AddNewOrder(new Order(), items));
+        }
+
+        [Test]
+        public void AddNewOrderTest_WithNoItems()
+        {
+            Assert.Throws<ArgumentException>(() => oHelper.AddNewOrder(order, new List<Item>()));
+        }
+
+        [Test]
         public void DeleteOrderTest()
         {
             oHelper.AddNewOrder(order, items);
@@ -81,10 +93,26 @@ namespace SuperService_BusinessLayer.Tests
         }
 
         [Test]
+        public void DeleteOrderTest_WithOrderThatDoesntExist()
+        {
+            oHelper.AddNewOrder(order, items);
+            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+            oHelper.DeleteOrder(new Order { OrderID = int.MaxValue });
+            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+        }
+
+        [Test]
         public void GetOrdersByTableNumberTest()
         {
             oHelper.AddNewOrder(order, items);
             Assert.IsTrue(oHelper.GetOrdersByTableNumberList(1000).Count() > 0);
+        }
+
+        [Test]
+        public void GetOrdersByTableNumberTest_WithTableNumberThatDoesntExist()
+        {
+            oHelper.AddNewOrder(order, items);
+            Assert.IsTrue(oHelper.GetOrdersByTableNumberList(int.MaxValue).Count() == 0);
         }
     }
 }

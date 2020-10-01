@@ -21,5 +21,24 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             return GetAllItems().Where(x => x.ItemID == id).FirstOrDefault();
         }
+
+        public void AddNewItem(Item item)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                db.Items.Add(item);
+                db.SaveChanges();
+            }
+        }
+
+        public void RemoveItem(Item item)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                var itemInDb = db.Items.Where(x => x.ItemID == item.ItemID);
+                db.Items.RemoveRange(itemInDb);
+                db.SaveChanges();
+            }
+        }
     }
 }

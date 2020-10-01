@@ -11,7 +11,36 @@ namespace SuperService_BusinessLayer
     public class ItemHelper
     {
         ItemService _serv = new ItemService();
-        public IEnumerable<Item> GetAllItemsOrderedByAvailability() => _serv.GetAllItems().OrderBy(x => x.CanOrder).ThenBy(x => x.Name);
+        IngredientService _ingServ = new IngredientService();
+        ItemIngredientService _iIServ = new ItemIngredientService();
+        public IEnumerable<Item> GetAllItemsOrderedByAvailability() => _serv.GetAllItems().OrderByDescending(x => x.CanOrder).ThenBy(x => x.Name);
         public Item GetItemByID(int id) => _serv.GetItemByID(id);
+        public void AddNewItem(Item item, IEnumerable<Ingredient> ingredients)
+        {
+            if (item != null && ingredients.Count() > 0)
+            {
+                _serv.AddNewItem(item);
+                var ingredientsWithID = new List<Ingredient>();
+                foreach (var ingredient in ingredients)
+                {
+                    if (_ingServ.GetIngredientsByName(ingredient.Name).Count() == 0)
+                    {
+                        _ingServ.AddNewIngredient(ingredient);
+                    }
+                    ingredientsWithID.AddRange(_ingServ.GetIngredientsByName(ingredient.Name));
+                }
+                var itemIngredients = new List<ItemIngredients>();
+                foreach(var ingredient in ingredientsWithID)
+                {
+                    itemIngredients.Add(new ItemIngredients { IngredientID = ingredient.IngredientID, ItemID = item.ItemID });
+                }
+                _iIServ.AddItemIngredients(itemIngredients);
+            }
+        }
+        public void RemoveItem(Item item)
+        {
+            _iIServ.RemoveItemIngredientsByItemID(item.ItemID);
+            _serv.RemoveItem(item);
+        }
     }
 }

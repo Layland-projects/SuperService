@@ -17,7 +17,7 @@ namespace SuperService_BusinessLayer
         public void DeleteTableByTableNumber(int number) => _serv.DeleteTableByTableNumber(number);
         public void AddNewTable(Table table)
         {
-            if (GetTableByTableNumber(table.TableNumber) == null)
+            if (table != null && GetTableByTableNumber(table.TableNumber) == null)
             {
                 _serv.AddNewTable(table);
             }
