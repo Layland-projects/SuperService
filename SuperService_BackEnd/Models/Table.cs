@@ -12,5 +12,6 @@ namespace SuperService_BackEnd.Models
         public int TableNumber { get; set; }
         public int NumberOfSeats { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
+        public string DisplayTableNumber => $"Table: {TableNumber}";
     }
 }

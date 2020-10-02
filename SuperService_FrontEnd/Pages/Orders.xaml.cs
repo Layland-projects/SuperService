@@ -28,7 +28,7 @@ namespace SuperService_FrontEnd.Pages
     {
         OrderHelper _oHelper;
         ICollection<Order> _orderItemsNotWorked = new List<Order>();
-        ICollection<OrderItemViewModel> _orderItemsInProgress = new List<OrderItemViewModel>();
+        ICollection<Order> _orderItemsInProgress = new List<Order>();
         ICollection<OrderItemViewModel> _orderItemsReadyToCollect = new List<OrderItemViewModel>();
         List<Order> _ordersNotCompleted;
 
@@ -42,7 +42,7 @@ namespace SuperService_FrontEnd.Pages
             }
         }
 
-        public ICollection<OrderItemViewModel> OrderItemsInProgress
+        public ICollection<Order> OrderItemsInProgress
         {
             get => _orderItemsInProgress;
             set
@@ -73,9 +73,25 @@ namespace SuperService_FrontEnd.Pages
                     OrderItemsNotWorked.Add(order);
                     OrderItemsNotWorked = new List<Order>(OrderItemsNotWorked);
                 }
+                if (order.OrderStatusID == OrderStatusValues.InProcess.OrderStatusID)
+                {
+                    OrderItemsInProgress.Add(order);
+                    OrderItemsInProgress = new List<Order>(OrderItemsInProgress);
+                }
             }
             InitializeComponent();
             DataContext = this;
+            OrderPlaced.ItemsSource = OrderItemsNotWorked;
+            SetupGroups(OrderPlaced);
+        }
+
+        public void SetupGroups(ItemsControl control)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(control.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Table.DisplayTableNumber");
+            view.GroupDescriptions.Add(groupDescription);
+            groupDescription = new PropertyGroupDescription("DisplayOrderID");
+            view.GroupDescriptions.Add(groupDescription);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -13,6 +13,6 @@ namespace SuperService_BackEnd.Models
         public int OrderStatusID { get; set; }
         public  OrderStatus OrderStatus { get; set; }
         public virtual ICollection<OrderItems> Items { get; set; }
-        public int ItemsCount => Items.Count;
+        public string DisplayOrderID => $"Order number: {OrderID}";
     }
 }
