@@ -46,6 +46,11 @@ namespace SuperService_FrontEnd.Windows
             buttonClickLockManager((Button)sender);
             _frame.Navigate(new NewOrder());
         }
+        private void btnOrders_Click(object sender, RoutedEventArgs e)
+        {
+            buttonClickLockManager((Button)sender);
+            _frame.Navigate(new Orders());
+        }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
@@ -65,5 +70,6 @@ namespace SuperService_FrontEnd.Windows
                 }
             }
         }
+
     }
 }

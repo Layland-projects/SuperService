@@ -14,7 +14,6 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -22,11 +21,27 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="OrderPlaced" ItemsSource="{Binding Path=OrdersPlaced}">
+        <ListView x:Name="OrderPlaced" ItemsSource="{Binding Path=OrderItemsNotWorked}" Grid.Row="1" Grid.Column="1">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                    </StackPanel>
+                    <ItemsControl ItemsSource="{Binding Path=Items}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Table: "/>
+                                        <TextBlock Text="{Binding Path=Order.Table.TableNumber}"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Order number: "/>
+                                        <TextBlock Text="{Binding Path=Order.OrderID}"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Path=Item.Name}"/>
+                                    <TextBlock Text="{Binding Path=Item.CostAsCurrency}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
