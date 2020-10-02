@@ -21,7 +21,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Where(x => x.Table.ID == id).ToList();
+                return db.Orders.Include(x => x.Table).Include(x => x.OrderStatus).Where(x => x.Table.ID == id).ToList();
             }
         }
 

@@ -10,6 +10,8 @@ namespace SuperService_BackEnd.Models
         [Key]
         public int OrderID { get; set; }
         public virtual Table Table { get; set; }
+        public int OrderStatusID { get; set; }
+        public  OrderStatus OrderStatus { get; set; }
         public virtual ICollection<OrderItems> Items { get; set; }
     }
 }

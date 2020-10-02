@@ -14,7 +14,7 @@ namespace SuperService_BusinessLayer
         OrderItemsService _oIService = new OrderItemsService();
 
         public IEnumerable<Order> GetOrdersByTableNumberList(int number) => _oService.GetOrdersByTableNumber(number);
-        public IEnumerable<Order> GetOrderByTableIDList(int id) => _oService.GetOrdersByTableID(id);
+        public IEnumerable<Order> GetOrdersByTableID(int id) => _oService.GetOrdersByTableID(id);
 
         public void AddNewOrder(Order order, IEnumerable<Item> items)
         {
@@ -26,6 +26,8 @@ namespace SuperService_BusinessLayer
             {
                 throw new ArgumentException("items must contain at least one Item");
             }
+            order.OrderStatusID = OrderStatusService.OrderPlaced.OrderStatusID;
+            order.OrderStatus = OrderStatusService.OrderPlaced;
             _oService.AddNewOrder(order);
             List<OrderItems> orderItems = new List<OrderItems>();
             foreach (var item in items)

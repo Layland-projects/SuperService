@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuperService_BackEnd.Models;
+using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
 using System;
 using System.Collections.Generic;
@@ -68,7 +69,8 @@ namespace SuperService_BusinessLayer.Tests
         public void AddNewOrderTest()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Where(x => x.OrderStatus.OrderStatusID == OrderStatusService.OrderPlaced.OrderStatusID).Count() == 1);
         }
 
         [Test]
@@ -87,18 +89,18 @@ namespace SuperService_BusinessLayer.Tests
         public void DeleteOrderTest()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
             oHelper.DeleteOrder(order);
-            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 0);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 0);
         }
 
         [Test]
         public void DeleteOrderTest_WithOrderThatDoesntExist()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
             oHelper.DeleteOrder(new Order { OrderID = int.MaxValue });
-            Assert.IsTrue(oHelper.GetOrderByTableIDList(table.ID).Count() == 1);
+            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
         }
 
         [Test]
