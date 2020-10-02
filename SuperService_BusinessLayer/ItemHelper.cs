@@ -15,6 +15,8 @@ namespace SuperService_BusinessLayer
         ItemIngredientService _iIServ = new ItemIngredientService();
         public IEnumerable<Item> GetAllItemsOrderedByAvailability() => _serv.GetAllItems().OrderByDescending(x => x.CanOrder).ThenBy(x => x.Name);
         public Item GetItemByID(int id) => _serv.GetItemByID(id);
+
+        //currently AddNewItem only exists to allow me to test, if it didn't work most of the tests wouldn't pass
         public void AddNewItem(Item item, IEnumerable<Ingredient> ingredients)
         {
             if (item != null && ingredients.Count() > 0)
@@ -37,6 +39,8 @@ namespace SuperService_BusinessLayer
                 _iIServ.AddItemIngredients(itemIngredients);
             }
         }
+
+        //currently RemoveItem only exists to allow me to test, if it didn't work most of the tests wouldn't pass
         public void RemoveItem(Item item)
         {
             _iIServ.RemoveItemIngredientsByItemID(item.ItemID);

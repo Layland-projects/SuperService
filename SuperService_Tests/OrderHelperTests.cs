@@ -119,28 +119,6 @@ namespace SuperService_BusinessLayer.Tests
         }
 
         [Test]
-        public void CreateOrderItemViewModelsFromOrderTest()
-        {
-            oHelper.AddNewOrder(order, items);
-            foreach (var o in oHelper.GetOrdersByTableID(table.ID))
-            {
-                var vms = oHelper.CreateOrderItemViewModelsFromOrder(o);
-                foreach (var vm in vms)
-                {
-                    Assert.AreEqual(o.Table.TableNumber, vm.TableNumber);
-                    Assert.AreEqual(o.OrderID, vm.OrderNumber);
-                    Assert.IsTrue(o.Items.Any(x => x.ItemID == vm.Item.ItemID));
-                }
-            }
-        }
-
-        [Test]
-        public void CreateOrderItemViewModelsFromOrderTest_WithOrderNotSavedInDB()
-        {
-            Assert.Throws<ArgumentException>(() => oHelper.CreateOrderItemViewModelsFromOrder(order));
-        }
-
-        [Test]
         public void GetOrderByOrderIDTest()
         {
             oHelper.AddNewOrder(order, items);
@@ -154,6 +132,45 @@ namespace SuperService_BusinessLayer.Tests
         public void GetOrderByOrderIDTest_WithIDDoesntExistInDB()
         {
             Assert.Null(oHelper.GetOrderByOrderID(int.MaxValue));
+        }
+
+        [Test]
+        public void UpdateOrderStatusTest()
+        {
+            oHelper.AddNewOrder(order, items);
+            var ord = oHelper.GetOrdersByTableID(table.ID);
+            var newOrd = new List<Order>();
+            foreach (var o in ord)
+            {
+                newOrd.Add(oHelper.UpdateOrderStatus(o, OrderStatusValues.InProcess));
+            }
+            foreach (var o in newOrd)
+            {
+                Assert.AreEqual(OrderStatusValues.InProcess.OrderStatusID, o.OrderStatusID);
+            }
+        }
+
+        [Test]
+        public void UpdateOrderStatusTest_WithOrderNotInDB()
+        {
+            Assert.Throws<ArgumentException>(() => oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess));
+        }
+
+        [Test]
+        public void UpdateOrderStatusTest_WithCustomStatus()
+        {
+            oHelper.AddNewOrder(order, items);
+            Assert.Throws<ArgumentException>(() => oHelper.UpdateOrderStatus(order, new OrderStatus { OrderStatusID = 12, Name = "A new Status", Description = "My test status" }));
+        }
+
+        [Test()]
+        public void GetAllNoneCompletedOrdersTest()
+        {
+            oHelper.AddNewOrder(order, items);
+            oHelper.AddNewOrder(new Order { Table = table }, items);
+            Assert.IsTrue(oHelper.GetAllNoneCompletedOrders().Where(x => x.Table.TableNumber == table.TableNumber).Count() == 2);
+            oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
+            Assert.IsTrue(oHelper.GetAllNoneCompletedOrders().Where(x => x.Table.TableNumber == table.TableNumber).Count() == 1);
         }
     }
 }

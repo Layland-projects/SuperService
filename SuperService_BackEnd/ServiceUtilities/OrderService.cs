@@ -60,5 +60,16 @@ namespace SuperService_BackEnd.ServiceUtilities
                 return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Where(x => x.OrderStatusID != OrderStatusService.Completed.OrderStatusID).ToList();
             }
         }
+
+        public void UpdateOrderStatus(Order order)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                var orderInDb = db.Orders.Where(x => x.OrderID == order.OrderID).FirstOrDefault();
+                orderInDb.OrderStatus = order.OrderStatus;
+                orderInDb.OrderStatusID = order.OrderStatusID;
+                db.SaveChanges();
+            }
+        }
     }
 }

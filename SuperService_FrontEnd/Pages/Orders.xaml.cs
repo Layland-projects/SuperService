@@ -24,67 +24,73 @@ namespace SuperService_FrontEnd.Pages
     /// <summary>
     /// Interaction logic for Orders.xaml
     /// </summary>
-    public partial class Orders : Page, INotifyPropertyChanged
+    public partial class Orders : Page
     {
         OrderHelper _oHelper;
-        ICollection<Order> _orderItemsNotWorked = new List<Order>();
-        ICollection<Order> _orderItemsInProgress = new List<Order>();
-        ICollection<OrderItemViewModel> _orderItemsReadyToCollect = new List<OrderItemViewModel>();
+        
         List<Order> _ordersNotCompleted;
 
-        public ICollection<Order> OrderItemsNotWorked
-        {
-            get => _orderItemsNotWorked;
-            set
-            {
-                _orderItemsNotWorked = value;
-                Common.OnPropertyChanged(PropertyChanged, this);
-            }
-        }
+        public ICollection<Order> OrderItemsNotWorked { get; private set; }
 
-        public ICollection<Order> OrderItemsInProgress
-        {
-            get => _orderItemsInProgress;
-            set
-            {
-                _orderItemsInProgress = value;
-                Common.OnPropertyChanged(PropertyChanged, this);
-            }
-        }
+        public ICollection<Order> OrderItemsInProgress { get; private set; }
 
-        public ICollection<OrderItemViewModel> OrderItemsReadyToCollect
-        {
-            get => _orderItemsReadyToCollect;
-            set
-            {
-                _orderItemsReadyToCollect = value;
-                Common.OnPropertyChanged(PropertyChanged, this);
-            }
-        }
+        public ICollection<Order> OrderItemsReadyToCollect { get; private set; }
 
         public Orders()
         {
             _oHelper = new OrderHelper();
+            InitializeComponent();
+            DataContext = this;
+            AttachSources();
+        }
+
+        private void OrderPlaced_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = (Order)((ListView)sender).SelectedItem;
+            _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
+            AttachSources();
+        }
+
+        private void InProgress_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = (Order)((ListView)sender).SelectedItem;
+            _oHelper.UpdateOrderStatus(order, OrderStatusValues.ReadyToCollect);
+            AttachSources();
+        }
+        private void ReadyToCollect_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var order = (Order)((ListView)sender).SelectedItem;
+            _oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
+            AttachSources();
+        }
+        public void AttachSources()
+        {
+            OrderItemsNotWorked = new List<Order>();
+            OrderItemsInProgress = new List<Order>();
+            OrderItemsReadyToCollect = new List<Order>();
             _ordersNotCompleted = _oHelper.GetAllNoneCompletedOrders().ToList();
             foreach (var order in _ordersNotCompleted)
             {
                 if (order.OrderStatusID == OrderStatusValues.OrderPlaced.OrderStatusID)
                 {
                     OrderItemsNotWorked.Add(order);
-                    OrderItemsNotWorked = new List<Order>(OrderItemsNotWorked);
                 }
                 if (order.OrderStatusID == OrderStatusValues.InProcess.OrderStatusID)
                 {
                     OrderItemsInProgress.Add(order);
-                    OrderItemsInProgress = new List<Order>(OrderItemsInProgress);
+                }
+                if (order.OrderStatusID == OrderStatusValues.ReadyToCollect.OrderStatusID)
+                {
+                    OrderItemsReadyToCollect.Add(order);
                 }
             }
-            InitializeComponent();
-            DataContext = this;
             OrderPlaced.ItemsSource = OrderItemsNotWorked;
+            InProgress.ItemsSource = OrderItemsInProgress;
+            ReadyToCollect.ItemsSource = OrderItemsReadyToCollect;
             SetupGroups(OrderPlaced);
+            SetupGroups(InProgress);
+            SetupGroups(ReadyToCollect);
         }
-
         public void SetupGroups(ItemsControl control)
         {
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(control.ItemsSource);
@@ -94,6 +100,5 @@ namespace SuperService_FrontEnd.Pages
             view.GroupDescriptions.Add(groupDescription);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -12,5 +12,7 @@ namespace SuperService_BusinessLayer
         public static OrderStatus InProcess => OrderStatusService.InProcess;
         public static OrderStatus ReadyToCollect => OrderStatusService.ReadyToCollect;
         public static OrderStatus Completed => OrderStatusService.Completed;
+
+        public static bool IsValidStatus(OrderStatus status) => status.OrderStatusID == OrderPlaced.OrderStatusID || status.OrderStatusID == InProcess.OrderStatusID || status.OrderStatusID == ReadyToCollect.OrderStatusID || status.OrderStatusID == Completed.OrderStatusID;
     }
 }

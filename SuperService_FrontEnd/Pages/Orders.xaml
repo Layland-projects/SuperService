@@ -18,15 +18,17 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="OrderPlaced" ItemsSource="{Binding Path=OrderItemsNotWorked}" Grid.Row="1" Grid.Column="1">
+        <TextBlock Text="Order placed" FontWeight="SemiBold" Grid.Row="1" Grid.Column="1" Margin="15, 0, 15, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="22"/>
+        <ListView x:Name="OrderPlaced" Grid.Row="2" Grid.Column="1" MouseDoubleClick="OrderPlaced_MouseDoubleClick" Margin="0, 0, 2, 0">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}" FontWeight="Heavy"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>
@@ -46,12 +48,39 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ListView x:Name="InProgress" ItemsSource="{Binding Path=OrderItemsInProgress}" Grid.Row="1" Grid.Column="2">
+        <TextBlock Text="In Progress" FontWeight="SemiBold" Grid.Row="1" Grid.Column="2" Margin="15, 0, 15, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="22"/>
+        <ListView x:Name="InProgress" Grid.Row="2" Grid.Column="2" MouseDoubleClick="InProgress_MouseDoubleClick" Margin="2, 0, 2, 0">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
+                            <TextBlock Text="{Binding Name}" FontWeight="Heavy"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ItemsControl ItemsSource="{Binding Path=Items}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding Path=Item.Name}"/>
+                                    <TextBlock Text="{Binding Path=Item.CostAsCurrency}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <TextBlock Text="Ready to Collect" FontWeight="SemiBold" Grid.Row="1" Grid.Column="3" Margin="15, 0, 15, 0" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="22"/>
+        <ListView x:Name="ReadyToCollect" Grid.Row="2" Grid.Column="3" MouseDoubleClick="ReadyToCollect_MouseDoubleClick" Margin="2, 0, 0, 0">
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontWeight="Heavy"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

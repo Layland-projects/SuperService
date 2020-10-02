@@ -30,7 +30,7 @@ namespace SuperService_BusinessLayer
                 throw new ArgumentException("items must contain at least one Item");
             }
             order.OrderStatusID = OrderStatusService.OrderPlaced.OrderStatusID;
-            order.OrderStatus = OrderStatusService.OrderPlaced;
+            order.OrderStatus = null;
             _oService.AddNewOrder(order);
             List<OrderItems> orderItems = new List<OrderItems>();
             foreach (var item in items)
@@ -46,24 +46,21 @@ namespace SuperService_BusinessLayer
             _oService.DeleteOrder(order);
         }
 
-        public IEnumerable<OrderItemViewModel> CreateOrderItemViewModelsFromOrder(Order order) 
+        public Order UpdateOrderStatus(Order order, OrderStatus status)
         {
-            var fullOrder = GetOrderByOrderID(order.OrderID);
-            if (fullOrder == null)
+            if (order == null || GetOrderByOrderID(order.OrderID) == null)
             {
-                throw new ArgumentException("order must exist in the database, add your order before trying to create the view model");
+                throw new ArgumentException("Provided order does not exist in the database, save the order before trying to update it's status");
             }
-            var vms = new List<OrderItemViewModel>();
-            foreach(var orderItems in fullOrder.Items)
+            else if (!OrderStatusValues.IsValidStatus(status))
             {
-                vms.Add(new OrderItemViewModel
-                {
-                    Item = orderItems.Item,
-                    TableNumber = fullOrder.Table.TableNumber,
-                    OrderNumber = orderItems.OrderID
-                });
+                throw new ArgumentException("Provided status does not exist in the database.");
             }
-            return vms;
+            order.OrderStatusID = status.OrderStatusID;
+            order.OrderStatus = null;
+            _oService.UpdateOrderStatus(order);
+            order.OrderStatus = status;
+            return order;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace SuperService_BusinessLayer
         public Ingredient GetIngredientByID(int id) => _serv.GetIngredientByID(id);
         public IEnumerable<Ingredient> GetIngredientsByName(string name) => _serv.GetIngredientsByName(name);
 
+        //AddNewIngredient is currently not being used in the project, just to test
         public void AddNewIngredient(Ingredient ingredient)
         {
             if (ingredient != null)
@@ -30,6 +31,7 @@ namespace SuperService_BusinessLayer
             }
         }
 
+        //RemoveIngredient is currently not being used in the project, just to test
         public void RemoveIngredient(Ingredient ingredient)
         {
             _serv.RemoveIngredient(ingredient);

@@ -25,13 +25,8 @@ namespace SuperService_BackEnd.ServiceUtilities
                 foreach (var item in orderItems)
                 {
                     AddNewOrderItem(item);
-                    //db.OrderItems.Attach(item);
-                    //db.Entry(item).State = EntityState.Added;
-                    //db.SaveChanges();
                 }
-
             }
-
         }
 
         public void DeleteOrderItemsByOrderID(int orderID)
