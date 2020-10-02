@@ -1,5 +1,6 @@
 ﻿using SuperService_BackEnd.Models;
 using SuperService_BusinessLayer;
+using SuperService_FrontEnd.GUIHelpers;
 using SuperService_FrontEnd.Windows;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace SuperService_FrontEnd.Pages
             set
             {
                 _selectedIngredient = value;
-                OnPropertyChanged();
+                Common.OnPropertyChanged(PropertyChanged, this);
             }
         }
         public IngredientDetails()
@@ -78,9 +79,5 @@ namespace SuperService_FrontEnd.Pages
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace SuperService_BusinessLayer
 {
     public class IngredientHelper
     {
-        IngredientService _serv = new IngredientService(new SuperServiceContext());
+        IngredientService _serv = new IngredientService();
 
         public IEnumerable<Ingredient> GetAllIngredientsWithDistinctNames()
         {
@@ -24,7 +24,10 @@ namespace SuperService_BusinessLayer
 
         public void AddNewIngredient(Ingredient ingredient)
         {
-            _serv.AddNewIngredient(ingredient);
+            if (ingredient != null)
+            {
+                _serv.AddNewIngredient(ingredient);
+            }
         }
 
         public void RemoveIngredient(Ingredient ingredient)
@@ -34,13 +37,19 @@ namespace SuperService_BusinessLayer
 
         public void UpdateIngredient(Ingredient ingredient)
         {
-            _serv.UpdateIngredient(ingredient);
+            if (ingredient != null)
+            {
+                _serv.UpdateIngredient(ingredient);
+            }
         }
 
         public Ingredient UndoIngredientChanges(Ingredient ingredient)
         {
-            _serv.RecycleConnection();
-            return _serv.GetIngredientByID(ingredient.IngredientID);
+            if (ingredient != null)
+            {
+                return _serv.GetIngredientByID(ingredient.IngredientID);
+            }
+            return new Ingredient();
         }
     }
 }

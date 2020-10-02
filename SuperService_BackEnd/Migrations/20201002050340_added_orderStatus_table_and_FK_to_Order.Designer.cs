@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperService_BackEnd;
 
 namespace SuperService_BackEnd.Migrations
 {
     [DbContext(typeof(SuperServiceContext))]
-    partial class SuperServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201002050340_added_orderStatus_table_and_FK_to_Order")]
+    partial class added_orderStatus_table_and_FK_to_Order
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,7 +159,7 @@ namespace SuperService_BackEnd.Migrations
 
                     b.HasKey("OrderStatusID");
 
-                    b.ToTable("OrderStatuses");
+                    b.ToTable("OrderStatus");
                 });
 
             modelBuilder.Entity("SuperService_BackEnd.Models.Table", b =>

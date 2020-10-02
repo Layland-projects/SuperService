@@ -15,6 +15,13 @@ namespace SuperService_BackEnd.Models
         public decimal Cost { get; set; }
         public virtual ICollection<ItemIngredients> ItemIngredients { get; set; }
         public virtual ICollection<OrderItems> Orders { get; set; }
+        public string CostAsCurrency => Cost.ToString("C");
+        public string FormattedCalories => $"{Calories}kcal";
+        public string FormattedProtein => $"{Protein}g";
+        public string FormattedFat => $"{Fat}g";
+        public string FormattedSugar => $"{Sugar}g";
+        public string FormattedCarbs => $"{Carbohydrates}g";
+        public string FormattedSalt => $"{Salt}g";
         public bool CanOrder => ItemIngredients.Where(x => !x.Ingredient.IsInStock).Count() == 0;
         public int Calories => ItemIngredients.GroupBy(x => x.Item.ItemID).Select(x => x.Sum(x => x.Ingredient.Calories)).Sum();
         public double Protein => ItemIngredients.GroupBy(x => x.Item.ItemID).Select(x => x.Sum(x => x.Ingredient.Protein)).Sum();

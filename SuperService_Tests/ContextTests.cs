@@ -15,10 +15,10 @@ namespace SuperService_Tests
         {
             using (var db = new SuperServiceContext())
             {
-                var burger = new Item() { Cost = 5.50m, Name = "Cheeseburger" };
-                var bun = new Ingredient() { Name = "Sesame seed bun", Calories = 220, Carbohydrates = 40, Fat = 0, Protein = 0, Salt = 4, Sugar = 10, NumberInStock = 120 };
-                var cheese = new Ingredient() { Name = "Cheese slice", Calories = 120, Carbohydrates = 3, Fat = 15, Protein = 1, Salt = 2, Sugar = 3, NumberInStock = 50 };
-                var beefBurger = new Ingredient() { Name = "Quarter pound beef burger", Calories = 250, Carbohydrates = 6, Fat = 15, Protein = 28, Salt = 10, Sugar = 1, NumberInStock = 80 };
+                var burger = new Item() { Cost = 5.50m, Name = "TestCheeseburger" };
+                var bun = new Ingredient() { Name = "TestSesame seed bun", Calories = 220, Carbohydrates = 40, Fat = 0, Protein = 0, Salt = 4, Sugar = 10, NumberInStock = 120 };
+                var cheese = new Ingredient() { Name = "TestCheese slice", Calories = 120, Carbohydrates = 3, Fat = 15, Protein = 1, Salt = 2, Sugar = 3, NumberInStock = 50 };
+                var beefBurger = new Ingredient() { Name = "TestQuarter pound beef burger", Calories = 250, Carbohydrates = 6, Fat = 15, Protein = 28, Salt = 10, Sugar = 1, NumberInStock = 80 };
 
                 var ingredientList = new List<Ingredient>()
                 {
@@ -56,10 +56,10 @@ namespace SuperService_Tests
         {
             using (var db = new SuperServiceContext())
             {
-                var burger = new Item() { Cost = 5.50m, Name = "Cheeseburger" };
-                var bun = new Ingredient() { Name = "Sesame seed bun", Calories = 220, Carbohydrates = 40, Fat = 0, Protein = 0, Salt = 4, Sugar = 10, NumberInStock = 120 };
-                var cheese = new Ingredient() { Name = "Cheese slice", Calories = 120, Carbohydrates = 3, Fat = 15, Protein = 1, Salt = 2, Sugar = 3, NumberInStock = 50 };
-                var beefBurger = new Ingredient() { Name = "Quarter pound beef burger", Calories = 250, Carbohydrates = 6, Fat = 15, Protein = 28, Salt = 10, Sugar = 1, NumberInStock = 80 };
+                var burger = new Item() { Cost = 5.50m, Name = "TestCheeseburger" };
+                var bun = new Ingredient() { Name = "TestSesame seed bun", Calories = 220, Carbohydrates = 40, Fat = 0, Protein = 0, Salt = 4, Sugar = 10, NumberInStock = 120 };
+                var cheese = new Ingredient() { Name = "TestCheese slice", Calories = 120, Carbohydrates = 3, Fat = 15, Protein = 1, Salt = 2, Sugar = 3, NumberInStock = 50 };
+                var beefBurger = new Ingredient() { Name = "TestQuarter pound beef burger", Calories = 250, Carbohydrates = 6, Fat = 15, Protein = 28, Salt = 10, Sugar = 1, NumberInStock = 80 };
 
                 var ingredientList = new List<Ingredient>()
                     {

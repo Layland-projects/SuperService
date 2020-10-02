@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperService_BackEnd;
 
 namespace SuperService_BackEnd.Migrations
 {
     [DbContext(typeof(SuperServiceContext))]
-    partial class SuperServiceContextModelSnapshot : ModelSnapshot
+    [Migration("20201001212753_altered_itemIngredients_model_to_get_FKs")]
+    partial class altered_itemIngredients_model_to_get_FKs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,15 +106,10 @@ namespace SuperService_BackEnd.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OrderStatusID")
-                        .HasColumnType("int");
-
                     b.Property<int?>("TableID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID");
-
-                    b.HasIndex("OrderStatusID");
 
                     b.HasIndex("TableID");
 
@@ -139,25 +136,6 @@ namespace SuperService_BackEnd.Migrations
                     b.HasIndex("OrderID");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("SuperService_BackEnd.Models.OrderStatus", b =>
-                {
-                    b.Property<int>("OrderStatusID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("OrderStatusID");
-
-                    b.ToTable("OrderStatuses");
                 });
 
             modelBuilder.Entity("SuperService_BackEnd.Models.Table", b =>
@@ -254,12 +232,6 @@ namespace SuperService_BackEnd.Migrations
 
             modelBuilder.Entity("SuperService_BackEnd.Models.Order", b =>
                 {
-                    b.HasOne("SuperService_BackEnd.Models.OrderStatus", "OrderStatus")
-                        .WithMany()
-                        .HasForeignKey("OrderStatusID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SuperService_BackEnd.Models.Table", "Table")
                         .WithMany("Orders")
                         .HasForeignKey("TableID");

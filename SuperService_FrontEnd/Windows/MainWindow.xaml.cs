@@ -1,4 +1,5 @@
 ﻿using SuperService_BackEnd.Models;
+using SuperService_FrontEnd.GUIHelpers;
 using SuperService_FrontEnd.Pages;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,13 @@ namespace SuperService_FrontEnd.Windows
 
         private void btnStock_Click(object sender, RoutedEventArgs e)
         {
+            buttonClickLockManager((Button)sender);
             _frame.Navigate(new Stock());
+        }
+        private void btnNewOrder_Click(object sender, RoutedEventArgs e)
+        {
+            buttonClickLockManager((Button)sender);
+            _frame.Navigate(new NewOrder());
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
@@ -46,6 +53,17 @@ namespace SuperService_FrontEnd.Windows
             App.Current.MainWindow = login;
             this.Close();
             login.Show();
+        }
+        public void buttonClickLockManager(Button buttonClicked)
+        {
+            buttonClicked.IsEnabled = false;
+            foreach (var button in Common.GetAllButtonsInWindow(this))
+            {
+                if (button != buttonClicked)
+                {
+                    button.IsEnabled = true;
+                }
+            }
         }
     }
 }
