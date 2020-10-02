@@ -5,6 +5,7 @@ using SuperService_FrontEnd.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -32,6 +33,7 @@ namespace SuperService_FrontEnd.Pages
         ItemHelper _iHelper;
         TableHelper _tHelper;
         ICollection<Item> _itemsOrdered;
+        string _totalCost = 0.ToString("C");
         public ICollection<Item> MenuItems { get; private set; }
         public ICollection<SuperService_BackEnd.Models.Table> Tables { get; set; }
         public ICollection<Item> ItemsOrdered
@@ -40,6 +42,15 @@ namespace SuperService_FrontEnd.Pages
             private set
             {
                 _itemsOrdered = value;
+                Common.OnPropertyChanged(PropertyChanged, this);
+            }
+        } 
+        public string TotalCost
+        {
+            get => _totalCost;
+            private set
+            {
+                _totalCost = value;
                 Common.OnPropertyChanged(PropertyChanged, this);
             }
         }
@@ -63,6 +74,7 @@ namespace SuperService_FrontEnd.Pages
             ItemsOrdered = new List<Item>(ItemsOrdered);
             _isBuildingOrder = true;
             ToggleEditMode();
+            CalculateTotal();
         }
         private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -74,6 +86,7 @@ namespace SuperService_FrontEnd.Pages
                 _isBuildingOrder = false;
                 ToggleEditMode();
             }
+            CalculateTotal();
         }
         private void cbTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -110,6 +123,11 @@ namespace SuperService_FrontEnd.Pages
             ToggleEditMode();
         }
 
+        private void CalculateTotal()
+        {
+            TotalCost = ItemsOrdered.Select(x => x.Cost).Sum().ToString("C", CultureInfo.CurrentCulture);
+        }
+
         private void ToggleEditMode()
         {
             if (_isBuildingOrder)
@@ -127,6 +145,7 @@ namespace SuperService_FrontEnd.Pages
                 ((MainWindow)App.Current.MainWindow).btnStock.IsEnabled = true;
                 ((MainWindow)App.Current.MainWindow).btnLogout.IsEnabled = true;
                 ((MainWindow)App.Current.MainWindow).btnOrders.IsEnabled = true;
+                CalculateTotal();
             }
         }
     }

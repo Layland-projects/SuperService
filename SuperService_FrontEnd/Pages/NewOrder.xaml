@@ -20,18 +20,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="5"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Menu" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
-        <ListView x:Name="Menu" ItemsSource="{Binding Path=MenuItems}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2"
+        <TextBlock Text="Menu" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0, 0, 3, 0"/>
+        <ListView x:Name="Menu" ItemsSource="{Binding Path=MenuItems}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="0, 0, 3, 0"
                   MouseDoubleClick="Menu_MouseDoubleClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <TextBlock Text="{Binding Path=Name}"/>
-                        <TextBlock Text="{Binding Path=CostAsCurrency}"/>
+                        <TextBlock Text="{Binding Path=FormattedCalories}"/>
+                        <TextBlock Text="{Binding Path=CostAsCurrency}" HorizontalAlignment="Right"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -46,8 +47,8 @@
         </ComboBox>
         <Button x:Name="btnPlaceOrder" Content="Place order" Click="btnPlaceOrder_Click" Grid.Column="3" Grid.Row="1" MinWidth="80" Margin="2" IsEnabled="False"/>
         <Button x:Name="btnUndo" Content="Undo" Click="btnUndo_Click" Grid.Column="4" Grid.Row="1" MinWidth="80" Margin="2, 2, 0, 2" IsEnabled="False"/>
-        <ListView x:Name="Order" ItemsSource="{Binding Path=ItemsOrdered}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2" Grid.RowSpan="2"
-                  MouseDoubleClick="Order_MouseDoubleClick">
+        <ListView x:Name="Order" ItemsSource="{Binding Path=ItemsOrdered}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2"
+                  MouseDoubleClick="Order_MouseDoubleClick" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel/>
@@ -62,6 +63,11 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <Viewbox Stretch="Uniform" Grid.Column="3" Grid.Row="3" HorizontalAlignment="Right">
+            <TextBlock Text="Total: " VerticalAlignment="Center"/>
+        </Viewbox>
+        <Viewbox Stretch="Uniform" Grid.Column="4" Grid.Row="3" HorizontalAlignment="Left">
+            <TextBlock Text="{Binding Path=TotalCost}" VerticalAlignment="Center"/>
+        </Viewbox>
     </Grid>
 </Page>
