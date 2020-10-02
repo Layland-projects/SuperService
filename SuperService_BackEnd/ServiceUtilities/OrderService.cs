@@ -17,11 +17,20 @@ namespace SuperService_BackEnd.ServiceUtilities
                 return db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
             }
         }
+
+        public Order GetOrderByOrderID(int id)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.OrderID == id).FirstOrDefault();
+            }
+        }
+
         public IEnumerable<Order> GetOrdersByTableID(int id) 
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Include(x => x.OrderStatus).Where(x => x.Table.ID == id).ToList();
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.Table.ID == id).ToList();
             }
         }
 
@@ -44,5 +53,12 @@ namespace SuperService_BackEnd.ServiceUtilities
             }
         }
 
+        public IEnumerable<Order> GetAllNoneCompletedOrders()
+        {
+            using (var db = new SuperServiceContext())
+            {
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Where(x => x.OrderStatusID != OrderStatusService.Completed.OrderStatusID).ToList();
+            }
+        }
     }
 }

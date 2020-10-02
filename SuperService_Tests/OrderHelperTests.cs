@@ -4,6 +4,7 @@ using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 
@@ -22,9 +23,9 @@ namespace SuperService_BusinessLayer.Tests
         [SetUp]
         public void SetUp()
         {
-            if (oHelper.GetOrdersByTableNumberList(1000).Count() > 0)
+            if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
             {
-                var oList = oHelper.GetOrdersByTableNumberList(1000).ToList();
+                var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
                 foreach (var o in oList)
                 {
                     oHelper.DeleteOrder(o);
@@ -51,9 +52,9 @@ namespace SuperService_BusinessLayer.Tests
         [TearDown]
         public void TearDown()
         {
-            if (oHelper.GetOrdersByTableNumberList(1000).Count() > 0)
+            if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
             {
-                var oList = oHelper.GetOrdersByTableNumberList(1000).ToList();
+                var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
                 foreach (var o in oList)
                 {
                     oHelper.DeleteOrder(o);
@@ -107,14 +108,52 @@ namespace SuperService_BusinessLayer.Tests
         public void GetOrdersByTableNumberTest()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrdersByTableNumberList(1000).Count() > 0);
+            Assert.IsTrue(oHelper.GetOrdersByTableNumber(1000).Count() > 0);
         }
 
         [Test]
         public void GetOrdersByTableNumberTest_WithTableNumberThatDoesntExist()
         {
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrdersByTableNumberList(int.MaxValue).Count() == 0);
+            Assert.IsTrue(oHelper.GetOrdersByTableNumber(int.MaxValue).Count() == 0);
+        }
+
+        [Test]
+        public void CreateOrderItemViewModelsFromOrderTest()
+        {
+            oHelper.AddNewOrder(order, items);
+            foreach (var o in oHelper.GetOrdersByTableID(table.ID))
+            {
+                var vms = oHelper.CreateOrderItemViewModelsFromOrder(o);
+                foreach (var vm in vms)
+                {
+                    Assert.AreEqual(o.Table.TableNumber, vm.TableNumber);
+                    Assert.AreEqual(o.OrderID, vm.OrderNumber);
+                    Assert.IsTrue(o.Items.Any(x => x.ItemID == vm.Item.ItemID));
+                }
+            }
+        }
+
+        [Test]
+        public void CreateOrderItemViewModelsFromOrderTest_WithOrderNotSavedInDB()
+        {
+            Assert.Throws<ArgumentException>(() => oHelper.CreateOrderItemViewModelsFromOrder(order));
+        }
+
+        [Test]
+        public void GetOrderByOrderIDTest()
+        {
+            oHelper.AddNewOrder(order, items);
+            foreach (var o in oHelper.GetOrdersByTableID(table.ID))
+            {
+                Assert.AreEqual(o.OrderID, oHelper.GetOrderByOrderID(o.OrderID).OrderID);
+            }
+        }
+
+        [Test]
+        public void GetOrderByOrderIDTest_WithIDDoesntExistInDB()
+        {
+            Assert.Null(oHelper.GetOrderByOrderID(int.MaxValue));
         }
     }
 }
