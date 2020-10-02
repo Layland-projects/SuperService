@@ -50,7 +50,6 @@ namespace SuperService_FrontEnd.Pages
 
         private void btnEditSave_Click(object sender, RoutedEventArgs e)
         {
-            ToggleEditMode();
             if ((string)btnEditSave.Content == "Save")
             {
                 if (int.TryParse(NumberInStock.Text, out _))
@@ -62,6 +61,7 @@ namespace SuperService_FrontEnd.Pages
                     MessageBox.Show("Stock value must be a numeric value only containing numbers 0-9", "Invalid stock value", MessageBoxButton.OK);
                 }
             }
+            ToggleEditMode();
         }
 
         private void btnUndo_Click(object sender, RoutedEventArgs e)
@@ -72,6 +72,10 @@ namespace SuperService_FrontEnd.Pages
 
         private void ToggleEditMode()
         {
+            if ((string)btnEditSave.Content == "Save")
+            {
+                ((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content).RefreshIngredients();
+            }
             ((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content)._stockList.IsEnabled = !((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content)._stockList.IsEnabled;
             btnUndo.IsEnabled = !btnUndo.IsEnabled;
             NumberInStock.IsEnabled = !NumberInStock.IsEnabled;

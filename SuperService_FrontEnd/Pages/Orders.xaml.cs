@@ -1,7 +1,6 @@
 ﻿using SuperService_BackEnd.Models;
 using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
-using SuperService_BusinessLayer.ViewModels;
 using SuperService_FrontEnd.GUIHelpers;
 using SuperService_FrontEnd.Windows;
 using System;

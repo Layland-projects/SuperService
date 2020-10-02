@@ -12,6 +12,12 @@ namespace SuperService_BusinessLayer.Tests
     public class TableHelperTests
     {
         TableHelper tHelper = new TableHelper();
+        [TearDown]
+        public void TearDown()
+        {
+            tHelper.DeleteTableByTableNumber(1000);
+        }
+
         [Test]
         public void GetAllTablesOrderedByNumberTest()
         {

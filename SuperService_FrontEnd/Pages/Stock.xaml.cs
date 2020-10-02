@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -24,21 +25,32 @@ namespace SuperService_FrontEnd.Pages
     {
         IngredientHelper _iHelper;
         public ICollection<Ingredient> Ingredients { get; private set; }
-        public Ingredient SelectedIngredient { get; set; }
+        public Ingredient SelectedIngredient { get; private set; }
         public bool IsInStock { get; set; }
 
         public Stock()
         {
             _iHelper = new IngredientHelper();
-            Ingredients = _iHelper.GetAllIngredientsWithDistinctNames().ToList();
+            RefreshIngredients();
             InitializeComponent();
             DataContext = this;
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var ingredient = (Ingredient)((ListView)sender).SelectedItem;
-            _detailsFrame.Navigate(new IngredientDetails(ingredient));
+            SelectedIngredient = (Ingredient)((ListView)sender).SelectedItem;
+            _detailsFrame.Navigate(new IngredientDetails(SelectedIngredient));
+        }
+
+        public  void RefreshIngredients()
+        {
+            Ingredients = _iHelper.GetAllIngredientsWithDistinctNames().ToList();
+            Ingredient item = new Ingredient();
+            if (_stockList != null)
+            {
+                item = (Ingredient)_stockList.SelectedItem;
+                _stockList.ItemsSource = Ingredients;
+            }
         }
     }
 }
