@@ -14,6 +14,7 @@ namespace SuperService_BusinessLayer.Tests
     public class OrderHelperTests
     {
         ItemHelper iHelper = new ItemHelper();
+        IngredientHelper ingHelper = new IngredientHelper();
         TableHelper tHelper = new TableHelper();
         OrderHelper oHelper = new OrderHelper();
         Table table;
@@ -72,6 +73,39 @@ namespace SuperService_BusinessLayer.Tests
             oHelper.AddNewOrder(order, items);
             Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
             Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Where(x => x.OrderStatus.OrderStatusID == OrderStatusService.OrderPlaced.OrderStatusID).Count() == 1);
+        }
+
+        [Test]
+        public void AddNewOrder_DecrementsIngredientStockCountTest()
+        {
+            var allIngredients = ingHelper.GetAllIngredientsWithDistinctNames().ToList();
+            var ingredientDict = new Dictionary<string, int>();
+            foreach (var item in items)
+            {
+                foreach (var itemIngredient in item.ItemIngredients)
+                {
+                    if (ingredientDict.ContainsKey(itemIngredient.Ingredient.Name))
+                    {
+                        ingredientDict[itemIngredient.Ingredient.Name]++;
+                    }
+                    else
+                    {
+                        ingredientDict.Add(itemIngredient.Ingredient.Name, 1);
+                    }
+                }
+            }
+            foreach (var ingredient in allIngredients)
+            {
+                if (ingredientDict.ContainsKey(ingredient.Name))
+                {
+                    ingredientDict[ingredient.Name] = ingredient.NumberInStock - ingredientDict[ingredient.Name];
+                }
+            }
+            oHelper.AddNewOrder(order, items);
+            foreach (var entry in ingredientDict)
+            {
+                Assert.AreEqual(entry.Value, ingHelper.GetIngredientsByName(entry.Key).First().NumberInStock);
+            }
         }
 
         [Test]

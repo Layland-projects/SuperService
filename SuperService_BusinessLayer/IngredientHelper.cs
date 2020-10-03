@@ -37,6 +37,12 @@ namespace SuperService_BusinessLayer
             _serv.RemoveIngredient(ingredient);
         }
 
+        public void DecrementStock(Ingredient ingredient)
+        {
+            ingredient.NumberInStock--;
+            UpdateIngredient(ingredient);
+        }
+
         public void UpdateIngredient(Ingredient ingredient)
         {
             if (ingredient != null)
