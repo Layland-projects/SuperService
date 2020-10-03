@@ -19,7 +19,7 @@ namespace SuperService_BusinessLayer.Tests
         {
             var testIngredients = _iHelper.GetIngredientsByName("TestCabbage").ToList();
             ingredient = testIngredients.Count > 0 ? testIngredients.First() : new Ingredient() { Name = "TestCabbage", Calories = 1, Carbohydrates = 1, Fat = 1, NumberInStock = 1, Protein = 1, Salt = 1, Sugar = 1 };
-            ingredient2 = testIngredients.Count > 0 ? testIngredients.Last() : new Ingredient() { Name = "TestCabbage", Calories = 1, Carbohydrates = 1, Fat = 1, NumberInStock = 1, Protein = 1, Salt = 1, Sugar = 1 };
+            ingredient2 = testIngredients.Count > 0 ? testIngredients.Last() : new Ingredient() { Name = "TestCabbage", Calories = 1, Carbohydrates = 1, Fat = 1, NumberInStock = 0, Protein = 1, Salt = 1, Sugar = 1 };
             _iHelper.RemoveIngredient(ingredient);
             _iHelper.RemoveIngredient(ingredient2);
             if (testIngredients.Count > 0)
@@ -67,6 +67,14 @@ namespace SuperService_BusinessLayer.Tests
         public void GetIngredientsByNameTest()
         {
             Assert.IsTrue(_iHelper.GetIngredientsByName("TestCabbage").Count() > 0);
+        }
+
+        public void DecrementStockTest()
+        {
+            _iHelper.DecrementStock(ingredient);
+            _iHelper.DecrementStock(ingredient2);
+            Assert.AreEqual(0, _iHelper.GetIngredientByID(ingredient.IngredientID).NumberInStock);
+            Assert.AreEqual(0, _iHelper.GetIngredientByID(ingredient2.IngredientID).NumberInStock);
         }
     }
 }

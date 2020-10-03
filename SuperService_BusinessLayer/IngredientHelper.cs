@@ -39,8 +39,11 @@ namespace SuperService_BusinessLayer
 
         public void DecrementStock(Ingredient ingredient)
         {
-            ingredient.NumberInStock--;
-            UpdateIngredient(ingredient);
+            if (GetIngredientByID(ingredient.IngredientID) == null)
+            {
+                throw new ArgumentException("ingredient doesn't exist in the Ingredients table");
+            }
+            _serv.DecrementStockForIngredient(ingredient);
         }
 
         public void UpdateIngredient(Ingredient ingredient)

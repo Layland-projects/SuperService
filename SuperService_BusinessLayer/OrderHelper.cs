@@ -1,4 +1,5 @@
 ﻿using SuperService_BackEnd;
+using SuperService_BackEnd.Migrations;
 using SuperService_BackEnd.Models;
 using SuperService_BackEnd.ServiceUtilities;
 using System;
@@ -10,6 +11,7 @@ namespace SuperService_BusinessLayer
 {
     public class OrderHelper
     {
+        IngredientHelper _iHelper = new IngredientHelper();
         OrderService _oService = new OrderService();
         OrderItemsService _oIService = new OrderItemsService();
 
@@ -37,6 +39,13 @@ namespace SuperService_BusinessLayer
                 orderItems.Add(new OrderItems { ItemID = item.ItemID, OrderID = order.OrderID });
             }
             _oIService.AddNewOrderItems(orderItems);
+            foreach (var item in items)
+            {
+                foreach (var itemIng in item.ItemIngredients)
+                {
+                    _iHelper.DecrementStock(itemIng.Ingredient);
+                }
+            }
         }
 
         public void DeleteOrder(Order order)

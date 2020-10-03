@@ -14,7 +14,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).ToList();
+                return db.Orders.Include(x => x.Table).Where(x => x.Table.TableNumber == number).AsNoTracking().ToList();
             }
         }
 
@@ -22,7 +22,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.OrderID == id).FirstOrDefault();
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.OrderID == id).AsNoTracking().FirstOrDefault();
             }
         }
 
@@ -30,7 +30,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.Table.ID == id).ToList();
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Include(x => x.OrderStatus).Where(x => x.Table.ID == id).AsNoTracking().ToList();
             }
         }
 
@@ -57,7 +57,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Where(x => x.OrderStatusID != OrderStatusService.Completed.OrderStatusID).ToList();
+                return db.Orders.Include(x => x.Table).Include(x => x.Items).ThenInclude(x => x.Item).ThenInclude(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).Where(x => x.OrderStatusID != OrderStatusService.Completed.OrderStatusID).AsNoTracking().ToList();
             }
         }
 

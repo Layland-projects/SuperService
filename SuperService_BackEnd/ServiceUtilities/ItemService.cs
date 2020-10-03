@@ -13,7 +13,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).ToList();
+                return db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).AsNoTracking().ToList();
             }
         }
 

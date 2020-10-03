@@ -16,7 +16,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         {
             using (var db = new SuperServiceContext())
             {
-                return db.Ingredients.ToList();
+                return db.Ingredients.AsNoTracking().ToList();
             }
         }
         public Ingredient GetIngredientByID(int id) => GetAllIngredients().Where(x => x.IngredientID == id).FirstOrDefault(); 
@@ -42,6 +42,16 @@ namespace SuperService_BackEnd.ServiceUtilities
                     db.Ingredients.Remove(dbIngredient);
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public void DecrementStockForIngredient(Ingredient ingredient)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                var ingInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+                ingInDb.NumberInStock--;
+                db.SaveChanges();
             }
         }
 
