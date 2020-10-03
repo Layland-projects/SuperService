@@ -70,11 +70,14 @@ namespace SuperService_FrontEnd.Pages
         private void Menu_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             var itemToAdd = (Item)((ListView)sender).SelectedItem;
-            ItemsOrdered.Add(itemToAdd);
-            ItemsOrdered = new List<Item>(ItemsOrdered);
-            _isBuildingOrder = true;
-            ToggleEditMode();
-            CalculateTotal();
+            if (itemToAdd != null)
+            {
+                ItemsOrdered.Add(itemToAdd);
+                ItemsOrdered = new List<Item>(ItemsOrdered);
+                _isBuildingOrder = true;
+                ToggleEditMode();
+                CalculateTotal();
+            }
         }
         private void Order_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -113,6 +116,27 @@ namespace SuperService_FrontEnd.Pages
         {
             _isBuildingOrder = false;
             ClearSelection();
+        }
+
+        private void DisplayItemInfo(object sender, RoutedEventArgs e)
+        {
+            var item = (Item)((ListView)sender).SelectedItem;
+            if (item != null)
+            {
+                string message = $"{item.Name}\n" +
+                    $"\tCalories: {item.FormattedCalories}\n" +
+                    $"\tProtein: {item.FormattedProtein}\n" +
+                    $"\tFat: {item.FormattedFat}\n" +
+                    $"\tCarbs: {item.FormattedCarbs}\n" +
+                    $"\tSugar: {item.FormattedSugar}\n" +
+                    $"\tSalt: {item.FormattedSalt}\n" +
+                    $"Ingredients:\n";
+                foreach (var itemIngredient in item.ItemIngredients)
+                {
+                    message += $"\t{itemIngredient.Ingredient.Name}\n";
+                }
+                MessageBox.Show(message, $"{item.Name} details");
+            }
         }
 
         private void ClearSelection()
