@@ -3,11 +3,12 @@
   <Class Name="SuperService_BackEnd.Models.Order">
     <Position X="8.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAABAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAABAAAAACCAAAAAgAQAAAAAAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Models\Order.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Table" />
+      <Property Name="OrderStatus" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Items" />
@@ -16,7 +17,7 @@
   <Class Name="SuperService_BackEnd.Models.OrderItems">
     <Position X="11.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAAAAAAAAAAAAAAAgAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAEAABAAAAAAAAAAgAgAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\OrderItems.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -27,7 +28,7 @@
   <Class Name="SuperService_BackEnd.Models.Table">
     <Position X="5.5" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAFAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAFEAAAAAAAAgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\Table.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -37,12 +38,19 @@
   <Class Name="SuperService_BackEnd.Models.Item">
     <Position X="14" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAFAAAAAgIAAAAAAgAAAABQAAAAAAIAAAAAAAAAEAIA=</HashCode>
+      <HashCode>IAFAAAAAgICAICAAgAQAAhUAAAAAAIAAAAEAAAAEAIA=</HashCode>
       <FileName>Models\Item.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Orders" />
     </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="SuperService_BackEnd.Models.OrderStatus">
+    <Position X="8.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\OrderStatus.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

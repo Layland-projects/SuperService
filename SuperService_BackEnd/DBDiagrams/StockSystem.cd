@@ -13,18 +13,27 @@
   <Class Name="SuperService_BackEnd.Models.ItemIngredients">
     <Position X="13.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAAAAAAAAAEAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <HashCode>AAAABAAgAAAAAAAAgAAAAAAEAAAAAAAAIAAAAAAAAAA=</HashCode>
       <FileName>Models\ItemIngredients.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Ingredient" />
       <Property Name="Item" />
+      <Property Name="Ingredient" />
     </ShowAsAssociation>
   </Class>
   <Class Name="SuperService_BackEnd.Models.Item">
     <Position X="16.5" Y="2.75" Width="1.5" />
+    <Members>
+      <Property Name="CostAsCurrency" Hidden="true" />
+      <Property Name="FormattedCalories" Hidden="true" />
+      <Property Name="FormattedCarbs" Hidden="true" />
+      <Property Name="FormattedFat" Hidden="true" />
+      <Property Name="FormattedProtein" Hidden="true" />
+      <Property Name="FormattedSalt" Hidden="true" />
+      <Property Name="FormattedSugar" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>IAFAAAAAgIAAAAAAgAAAABQAAAAAAIAAAAAAAAAEAIA=</HashCode>
+      <HashCode>IAFAAAAAgICAICAAgAQAAhUAAAAAAIAAAAEAAAAEAIA=</HashCode>
       <FileName>Models\Item.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
