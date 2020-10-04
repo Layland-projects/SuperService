@@ -76,39 +76,6 @@ namespace SuperService_BusinessLayer.Tests
         }
 
         [Test]
-        public void AddNewOrder_DecrementsIngredientStockCountTest()
-        {
-            var allIngredients = ingHelper.GetAllIngredientsWithDistinctNames().ToList();
-            var ingredientDict = new Dictionary<string, int>();
-            foreach (var item in items)
-            {
-                foreach (var itemIngredient in item.ItemIngredients)
-                {
-                    if (ingredientDict.ContainsKey(itemIngredient.Ingredient.Name))
-                    {
-                        ingredientDict[itemIngredient.Ingredient.Name]++;
-                    }
-                    else
-                    {
-                        ingredientDict.Add(itemIngredient.Ingredient.Name, 1);
-                    }
-                }
-            }
-            foreach (var ingredient in allIngredients)
-            {
-                if (ingredientDict.ContainsKey(ingredient.Name))
-                {
-                    ingredientDict[ingredient.Name] = ingredient.NumberInStock - ingredientDict[ingredient.Name];
-                }
-            }
-            oHelper.AddNewOrder(order, items);
-            foreach (var entry in ingredientDict)
-            {
-                Assert.AreEqual(entry.Value, ingHelper.GetIngredientsByName(entry.Key).First().NumberInStock);
-            }
-        }
-
-        [Test]
         public void AddNewOrderTest_WithEmptyOrder()
         {
             Assert.Throws<ArgumentException>(() => oHelper.AddNewOrder(new Order(), items));

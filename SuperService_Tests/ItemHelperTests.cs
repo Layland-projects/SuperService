@@ -75,5 +75,80 @@ namespace SuperService_BusinessLayer.Tests
         {
             Assert.Null(iHelper.GetItemByID(int.MaxValue));
         }
+
+
+        [Test]
+        public void DecrementStockForItem_DecrementsIngredientStockCountTest()
+        {
+            var testItems = iHelper.GetAllItemsOrderedByAvailability().Where(x => x.Name.StartsWith("Test")).ToList();
+            var allIngredients = ingHelper.GetAllIngredientsWithDistinctNames().ToList();
+            var ingredientDict = new Dictionary<string, int>();
+            foreach (var item in testItems)
+            {
+                foreach (var itemIngredient in item.ItemIngredients)
+                {
+                    if (ingredientDict.ContainsKey(itemIngredient.Ingredient.Name))
+                    {
+                        ingredientDict[itemIngredient.Ingredient.Name]++;
+                    }
+                    else
+                    {
+                        ingredientDict.Add(itemIngredient.Ingredient.Name, 1);
+                    }
+                }
+            }
+            foreach (var ingredient in allIngredients)
+            {
+                if (ingredientDict.ContainsKey(ingredient.Name))
+                {
+                    ingredientDict[ingredient.Name] = (ingredient.NumberInStock - ingredientDict[ingredient.Name] < 0) ? 0 : ingredient.NumberInStock - ingredientDict[ingredient.Name];
+                }
+            }
+            foreach (var item in testItems)
+            {
+                iHelper.DecremenetStockForItem(item);
+            }
+            foreach (var entry in ingredientDict)
+            {
+                Assert.AreEqual(entry.Value, ingHelper.GetIngredientsByName(entry.Key).First().NumberInStock);
+            }
+        }
+
+        [Test]
+        public void IncrementStockForItem_IncrementsIngredientStockCountTest()
+        {
+            var testItems = iHelper.GetAllItemsOrderedByAvailability().Where(x => x.Name.StartsWith("Test")).ToList();
+            var allIngredients = ingHelper.GetAllIngredientsWithDistinctNames().ToList();
+            var ingredientDict = new Dictionary<string, int>();
+            foreach (var item in testItems)
+            {
+                foreach (var itemIngredient in item.ItemIngredients)
+                {
+                    if (ingredientDict.ContainsKey(itemIngredient.Ingredient.Name))
+                    {
+                        ingredientDict[itemIngredient.Ingredient.Name]++;
+                    }
+                    else
+                    {
+                        ingredientDict.Add(itemIngredient.Ingredient.Name, 1);
+                    }
+                }
+            }
+            foreach (var ingredient in allIngredients)
+            {
+                if (ingredientDict.ContainsKey(ingredient.Name))
+                {
+                    ingredientDict[ingredient.Name] = (ingredient.NumberInStock + ingredientDict[ingredient.Name] < 0) ? 0 : ingredient.NumberInStock + ingredientDict[ingredient.Name];
+                }
+            }
+            foreach (var item in testItems)
+            {
+                iHelper.IncrementStockForItem(item);
+            }
+            foreach (var entry in ingredientDict)
+            {
+                Assert.AreEqual(entry.Value, ingHelper.GetIngredientsByName(entry.Key).First().NumberInStock);
+            }
+        }
     }
 }

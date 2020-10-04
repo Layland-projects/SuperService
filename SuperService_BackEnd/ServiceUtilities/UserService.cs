@@ -16,7 +16,7 @@ namespace SuperService_BackEnd.ServiceUtilities
         }
         public IEnumerable<User> GetAllUsers()
         {
-            return _db.Users.Include(x => x.UserType);
+            return _db.Users.Include(x => x.UserType).AsNoTracking();
         }
 
         public User Login(string username, string password)

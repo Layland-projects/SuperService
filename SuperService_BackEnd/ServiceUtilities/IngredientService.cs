@@ -55,6 +55,16 @@ namespace SuperService_BackEnd.ServiceUtilities
             }
         }
 
+        public void IncrementStockForIngredient(Ingredient ingredient)
+        {
+            using (var db = new SuperServiceContext())
+            {
+                var ingInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+                ingInDb.NumberInStock++;
+                db.SaveChanges();
+            }
+        }
+
         public void UpdateIngredient(Ingredient ingredient)
         {
             using (var db = new SuperServiceContext())

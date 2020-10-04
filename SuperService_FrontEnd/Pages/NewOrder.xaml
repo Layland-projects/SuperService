@@ -28,11 +28,11 @@
         <ListView x:Name="Menu" ItemsSource="{Binding Path=MenuItems}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="0, 0, 3, 0"
                   MouseDoubleClick="Menu_MouseDoubleClick" MouseRightButtonUp="DisplayItemInfo">
             <ListView.ItemContainerStyle>
-                <Style>
+                <Style TargetType="ListViewItem">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding CanOrder}" Value="False">
                             <Setter Property="Canvas.Background" Value="Red"/>
-                            <Setter Property="Panel.IsEnabled" Value="False"/>
+                            <Setter Property="TextBlock.Foreground" Value="DarkGray"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>

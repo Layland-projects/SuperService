@@ -26,7 +26,7 @@ namespace SuperService_FrontEnd.Pages
     public partial class Orders : Page
     {
         OrderHelper _oHelper;
-        
+        User _loggedInUser;
         List<Order> _ordersNotCompleted;
 
         public ICollection<Order> OrderItemsNotWorked { get; private set; }
@@ -35,8 +35,9 @@ namespace SuperService_FrontEnd.Pages
 
         public ICollection<Order> OrderItemsReadyToCollect { get; private set; }
 
-        public Orders()
+        public Orders(User user)
         {
+            _loggedInUser = user;
             _oHelper = new OrderHelper();
             InitializeComponent();
             DataContext = this;
@@ -45,22 +46,50 @@ namespace SuperService_FrontEnd.Pages
 
         private void OrderPlaced_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var order = (Order)((ListView)sender).SelectedItem;
-            _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
-            AttachSources();
+            if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
+            {
+                var order = (Order)((ListView)sender).SelectedItem;
+                _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
+                AttachSources();
+            }
         }
 
         private void InProgress_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var order = (Order)((ListView)sender).SelectedItem;
-            _oHelper.UpdateOrderStatus(order, OrderStatusValues.ReadyToCollect);
-            AttachSources();
+            if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
+            {
+                var order = (Order)((ListView)sender).SelectedItem;
+                _oHelper.UpdateOrderStatus(order, OrderStatusValues.ReadyToCollect);
+                AttachSources();
+            }
+        }
+        private void InProgress_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
+            {
+                var order = (Order)((ListView)sender).SelectedItem;
+                _oHelper.UpdateOrderStatus(order, OrderStatusValues.OrderPlaced);
+                AttachSources();
+            }
         }
         private void ReadyToCollect_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var order = (Order)((ListView)sender).SelectedItem;
-            _oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
-            AttachSources();
+            if (_loggedInUser.UserType.UserTypeID != UserTypeValues.KitchenStaff.UserTypeID)
+            {
+                var order = (Order)((ListView)sender).SelectedItem;
+                _oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
+                AttachSources();
+            }
+        }
+
+        private void ReadyToCollect_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
+            {
+                var order = (Order)((ListView)sender).SelectedItem;
+                _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
+                AttachSources();
+            }
         }
         public void AttachSources()
         {

@@ -39,13 +39,6 @@ namespace SuperService_BusinessLayer
                 orderItems.Add(new OrderItems { ItemID = item.ItemID, OrderID = order.OrderID });
             }
             _oIService.AddNewOrderItems(orderItems);
-            foreach (var item in items)
-            {
-                foreach (var itemIng in item.ItemIngredients)
-                {
-                    _iHelper.DecrementStock(itemIng.Ingredient);
-                }
-            }
         }
 
         public void DeleteOrder(Order order)

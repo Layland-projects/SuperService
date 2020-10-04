@@ -46,5 +46,21 @@ namespace SuperService_BusinessLayer
             _iIServ.RemoveItemIngredientsByItemID(item.ItemID);
             _serv.RemoveItem(item);
         }
+
+        public void DecremenetStockForItem(Item item)
+        {
+            foreach (var itemIng in item.ItemIngredients)
+            {
+                _ingServ.DecrementStockForIngredient(itemIng.Ingredient);
+            }
+        }
+
+        public void IncrementStockForItem(Item item)
+        {
+            foreach (var itemIng in item.ItemIngredients)
+            {
+                _ingServ.IncrementStockForIngredient(itemIng.Ingredient);
+            }
+        }
     }
 }
