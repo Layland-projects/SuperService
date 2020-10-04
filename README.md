@@ -31,7 +31,7 @@ The project goal is to create a software solution for table service restaurants.
 
 ### Order System
 
-![Order System Diagram](https://github.com/Layland-projects/SuperService/blob/master/ReadmeContent/OrderSystemDiagram.png?raw=true)
+![OrderSystemDiagram.png](https://github.com/Layland-projects/SuperService/blob/Sprint_2/main/ReadmeContent/OrderSystemDiagram.png?raw=true)
 
 ### Stock System
 
@@ -79,29 +79,29 @@ I think I should've stayed on top of any documentation updates after each ticket
 
 I'm interested to try and implement a type of scrum poker with a scoring system for each ticket.
 
+### Sprint 2
 
+#### <u>Goals</u>
 
-### Business logic
+* Implement an order system
+  * A server can place an order
+  * Servers and kitchen staff can interact with the progress of the order
+* Have validation to prevent you from ordering items out of stock
+* Implement the kitchen staff and server user roles
+  * Limit the functionality each role is able to access based off what is relevant to their role
 
-#### <u>Menu Items</u>
+#### <u>Tickets</u>
 
-* Menu items should be marked as red If they can't be ordered (ingredients not in stock)
-
-#### <u>Orders</u>
-
-* Orders should be colour coded by their state
-  * If an order has been in a particular state for too long (defined in settings) mark as red
-  * Blue - Order placed
-  * Yellow - In Process
-  * Green - Ready to collect
-* Orders can only contain meals which we have the ingredients for in stock
-* When an order is placed the stock is updated to remove the required ingredients for the order
-* If an order is cancelled before it enters `InProcess` then add the ingredients that weren't used back into the stock
-
-#### <u>Manager (?)</u>
-
-* As a manager I should be able to do everything a Kitchen staff or Server can do.
-* As a manager I should be able to cancel an order
-  * They must be able to cancel the order at any point
-* As a manager I should be able to update the nutritional information for a stock item
-* As a manager I should be able to add a new item to the stock sheet and set it's nutritional information
+| Sprint backlog | In progress | Review | Done                                                         |
+| -------------- | ----------- | ------ | ------------------------------------------------------------ |
+|                |             |        | [Create order system - Place new order](https://github.com/Layland-projects/SuperService/projects/1#card-46459384) |
+|                |             |        | [Create order system - Add orders page](https://github.com/Layland-projects/SuperService/projects/1#card-46592386) |
+|                |             |        | [Create order system - Make total order cost visible](https://github.com/Layland-projects/SuperService/projects/1#card-46579346) |
+|                |             |        | [Create order system - update order to InProgress](https://github.com/Layland-projects/SuperService/projects/1#card-46459501) |
+|                |             |        | [Create order system - update order to ReadyToCollect](https://github.com/Layland-projects/SuperService/projects/1#card-46459559) |
+|                |             |        | [Create order system - Update order to Complete](https://github.com/Layland-projects/SuperService/projects/1#card-46459630) |
+|                |             |        | [Epic - Create order system](https://github.com/Layland-projects/SuperService/projects/1#card-46459309) |
+|                |             |        | [Update ingredient stocks as order is being placed](https://github.com/Layland-projects/SuperService/projects/1#card-46638005) |
+|                |             |        | [Disable and highlight menu items out of stock](https://github.com/Layland-projects/SuperService/projects/1#card-46636931) |
+|                |             |        | [Setup user types - Kitchen staff](https://github.com/Layland-projects/SuperService/projects/1#card-46458649) |
+|                |             |        | [Setup user types - FOH/Server](https://github.com/Layland-projects/SuperService/projects/1#card-46458673) |
