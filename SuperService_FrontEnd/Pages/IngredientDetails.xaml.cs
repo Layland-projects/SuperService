@@ -55,13 +55,17 @@ namespace SuperService_FrontEnd.Pages
                 if (int.TryParse(NumberInStock.Text, out _))
                 {
                     _iHelper.UpdateIngredient(SelectedIngredient);
+                    ToggleEditMode();
                 }
                 else
                 {
                     MessageBox.Show("Stock value must be a numeric value only containing numbers 0-9", "Invalid stock value", MessageBoxButton.OK);
                 }
             }
-            ToggleEditMode();
+            else
+            {
+                ToggleEditMode();
+            }
         }
 
         private void btnUndo_Click(object sender, RoutedEventArgs e)
