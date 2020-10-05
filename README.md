@@ -105,3 +105,33 @@ I'm interested to try and implement a type of scrum poker with a scoring system 
 |                |             |        | [Disable and highlight menu items out of stock](https://github.com/Layland-projects/SuperService/projects/1#card-46636931) |
 |                |             |        | [Setup user types - Kitchen staff](https://github.com/Layland-projects/SuperService/projects/1#card-46458649) |
 |                |             |        | [Setup user types - FOH/Server](https://github.com/Layland-projects/SuperService/projects/1#card-46458673) |
+
+#### <u>Retrospective</u>
+
+##### What went well
+
+I think my time management was overall good.
+
+##### What could have gone better?
+
+I think I did end up spending a more than ideal amount of time thinking about implementations and how to go about things when working on a task.
+
+##### What to try next?
+
+Next I want to try a rapid prototyping style, rather than spending as much time thinking about different approaches, just try them and see what works.
+
+### Sprint 3
+
+#### <u>Goals</u>
+
+* Implement a custom styling for elements across the application
+
+#### <u>Tickets</u>
+
+| Sprint backlog | In progress | Review | Done                                                         |
+| -------------- | ----------- | ------ | ------------------------------------------------------------ |
+|                |             |        | [Epic - Add styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755716) |
+|                |             |        | [Add styling - Add custom button styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755768) |
+|                |             |        | [Add styling - Add custom combo box styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755815) |
+|                |             |        | [Add styling - Add custom text block styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755875) |
+|                |             |        | [Add styling - Add custom List view styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755990) |

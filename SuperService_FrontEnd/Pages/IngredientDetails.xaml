@@ -8,7 +8,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="IngredientDetails"
       ShowsNavigationUI="False">
-
+    <Page.Resources>
+        <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
+    </Page.Resources>
     <Grid Background="#FFCBE7FF">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -82,11 +84,11 @@
                 IsEnabled="False"
                 Text="{Binding SelectedIngredient.NumberInStock}"/>
         <Button x:Name="btnEditSave" Content="Edit" Grid.Column="5" Grid.Row="9"
-                Click="btnEditSave_Click" Width="80">
+                Click="btnEditSave_Click" Width="80" Margin="2, 0, 0, 0">
             
         </Button>
         <Button x:Name="btnUndo" Content="Undo" Grid.Column="4" Grid.Row="9"
-                 Click="btnUndo_Click" Width="80" IsEnabled="False">
+                 Click="btnUndo_Click" Width="80" IsEnabled="False" Margin="0, 0, 2, 0">
 
         </Button>
     </Grid>

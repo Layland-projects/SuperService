@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Orders">
-
+    <Page.Resources>
+        <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
+    </Page.Resources>
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>

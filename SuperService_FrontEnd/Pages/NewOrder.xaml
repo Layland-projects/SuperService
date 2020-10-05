@@ -7,7 +7,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="NewOrder">
-
+    <Page.Resources>
+        <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
+    </Page.Resources>
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -29,12 +31,20 @@
                   MouseDoubleClick="Menu_MouseDoubleClick" MouseRightButtonUp="DisplayItemInfo">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
+                    <Style.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Style.Resources>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding CanOrder}" Value="False">
                             <Setter Property="Canvas.Background" Value="Red"/>
-                            <Setter Property="TextBlock.Foreground" Value="DarkGray"/>
                         </DataTrigger>
                     </Style.Triggers>
+                    <Style.Setters>
+                        <Setter Property="FontFamily" Value="Dubai"/>
+                        <Setter Property="Foreground" Value="DarkSlateGray"/>
+                    </Style.Setters>
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
@@ -42,7 +52,7 @@
                     <StackPanel>
                         <TextBlock Text="{Binding Path=Name}"/>
                         <TextBlock Text="{Binding Path=FormattedCalories}"/>
-                        <TextBlock Text="{Binding Path=CostAsCurrency}" HorizontalAlignment="Right"/>
+                        <TextBlock Text="{Binding Path=CostAsCurrency}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -55,8 +65,8 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Button x:Name="btnPlaceOrder" Content="Place order" Click="btnPlaceOrder_Click" Grid.Column="3" Grid.Row="1" MinWidth="80" Margin="2" IsEnabled="False"/>
-        <Button x:Name="btnUndo" Content="Undo" Click="btnUndo_Click" Grid.Column="4" Grid.Row="1" MinWidth="80" Margin="2, 2, 0, 2" IsEnabled="False"/>
+        <Button x:Name="btnPlaceOrder" Content="Place order" Click="btnPlaceOrder_Click" Grid.Column="3" Grid.Row="1" MinHeight="30" MinWidth="80" Margin="2, 0, 2, 2" IsEnabled="False"/>
+        <Button x:Name="btnUndo" Content="Undo" Click="btnUndo_Click" Grid.Column="4" Grid.Row="1" MinHeight="30" MinWidth="80" Margin="2, 0, 0, 2" IsEnabled="False"/>
         <ListView x:Name="Order" ItemsSource="{Binding Path=ItemsOrdered}" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="2"
                   MouseDoubleClick="Order_MouseDoubleClick" MouseRightButtonUp="DisplayItemInfo" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListView.ItemsPanel>

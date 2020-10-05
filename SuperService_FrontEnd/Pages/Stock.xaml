@@ -8,7 +8,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Stock"
       ShowsNavigationUI="False">
-    
+    <Page.Resources>
+        <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
+    </Page.Resources>
     <Grid Background="AliceBlue" x:Name="IngredientGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -26,24 +28,29 @@
         <ListView x:Name="_stockList" Grid.Column="1" Grid.Row="1" MaxWidth="200" ItemsSource="{Binding Ingredients}"
                   SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemContainerStyle>
-                <Style>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="5"/>
+                        </Style>
+                    </Style.Resources>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsInStock}" Value="False">
                             <Setter Property="Canvas.Background" Value="Red"/>
+                            <Setter Property="TextBlock.Foreground" Value="DarkBlue"/>
                         </DataTrigger>
                     </Style.Triggers>
+                    <Setter Property="TextBlock.Foreground" Value="DarkSlateGray"/>
+                    <Setter Property="TextBlock.FontFamily" Value="Dubai"/>
                 </Style>
             </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name">
-
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Frame x:Name="_detailsFrame" Grid.Column="3" Grid.ColumnSpan="2" 
                Grid.Row="1" NavigationUIVisibility="Hidden"/>
     </Grid>
-
 </Page>
