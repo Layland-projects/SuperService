@@ -135,3 +135,17 @@ Next I want to try a rapid prototyping style, rather than spending as much time 
 |                |             |        | [Add styling - Add custom combo box styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755815) |
 |                |             |        | [Add styling - Add custom text block styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755875) |
 |                |             |        | [Add styling - Add custom List view styling](https://github.com/Layland-projects/SuperService/projects/1#card-46755990) |
+
+#### <u>Retrospective</u>
+
+##### What went well
+
+I think the 'rapid prototyping' worked out really well for GUI changes, especially as you can do it with the program running so you get immediate feedback.
+
+##### What could have gone better?
+
+Overall I'm very pleased with what happened this sprint, I was able to resolve any blockers swiftly
+
+##### What to try next?
+
+Next I would like to try back end development with a 'rapid prototyping' style and see if it is as effective as it was for front end development.
