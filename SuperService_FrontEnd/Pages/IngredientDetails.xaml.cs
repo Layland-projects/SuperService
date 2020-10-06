@@ -55,7 +55,7 @@ namespace SuperService_FrontEnd.Pages
                 if (int.TryParse(NumberInStock.Text, out _))
                 {
                     _iHelper.UpdateIngredient(SelectedIngredient);
-                    ToggleEditMode();
+                    ToggleEditMode(sender);
                 }
                 else
                 {
@@ -64,19 +64,19 @@ namespace SuperService_FrontEnd.Pages
             }
             else
             {
-                ToggleEditMode();
+                ToggleEditMode(sender);
             }
         }
 
         private void btnUndo_Click(object sender, RoutedEventArgs e)
         {
-            ToggleEditMode();
+            ToggleEditMode(sender);
             SelectedIngredient = _iHelper.UndoIngredientChanges(SelectedIngredient);
         }
 
-        private void ToggleEditMode()
+        private void ToggleEditMode(object sender)
         {
-            if ((string)btnEditSave.Content == "Save")
+            if ((string)((Button)sender).Content == "Save")
             {
                 MessageBox.Show($"{SelectedIngredient.Name} stock updated", "Success!");
                 ((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content).RefreshIngredients();

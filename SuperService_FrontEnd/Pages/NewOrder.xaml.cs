@@ -122,6 +122,10 @@ namespace SuperService_FrontEnd.Pages
         private void btnUndo_Click(object sender, RoutedEventArgs e)
         {
             _isBuildingOrder = false;
+            foreach (var item in ItemsOrdered)
+            {
+                _iHelper.IncrementStockForItem(item);
+            }
             ClearSelection();
         }
 
@@ -166,12 +170,8 @@ namespace SuperService_FrontEnd.Pages
         {
             cbTables.SelectedItem = null;
             Menu.SelectedItem = null;
-            while(ItemsOrdered.Count > 0)
-            {
-                _iHelper.IncrementStockForItem(ItemsOrdered[0]);
-                ItemsOrdered.Remove(ItemsOrdered[0]);
-                ItemsOrdered = new List<Item>(ItemsOrdered);
-            }
+            _newOrder = new Order();
+            ItemsOrdered = new List<Item>();
             MenuItems = _iHelper.GetAllItemsOrderedByAvailability().ToList();
             Menu.ItemsSource = MenuItems;
             ToggleEditMode();
