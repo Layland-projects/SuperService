@@ -11,7 +11,7 @@
     <Page.Resources>
         <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
     </Page.Resources>
-    <Grid Background="AliceBlue" x:Name="IngredientGrid">
+    <Grid x:Name="IngredientGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="auto"/>
@@ -25,6 +25,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
+        <Border Background="AliceBlue" BorderBrush="AliceBlue" BorderThickness="1" CornerRadius="10" Grid.Column="0" Grid.ColumnSpan="10" Grid.Row="0" Grid.RowSpan="10"/>
         <ListView x:Name="_stockList" Grid.Column="1" Grid.Row="1" MaxWidth="200" ItemsSource="{Binding Ingredients}"
                   SelectionChanged="ListView_SelectionChanged">
             <ListView.ItemContainerStyle>

@@ -11,7 +11,7 @@
     <Page.Resources>
         <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
     </Page.Resources>
-    <Grid Background="#FFCBE7FF">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="auto"/>
@@ -34,61 +34,62 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
+        <Border CornerRadius="10" Background="#FFCBE7FF" BorderBrush="#FFCBE7FF" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="10" Grid.Row="0" Grid.RowSpan="10"/>
         <TextBlock Text="Calories" Grid.Column="1" Grid.Row="1"/>
         <TextBox x:Name="Calories" Grid.Column="2" Grid.Row="1"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 0, 0, 2"
                  IsEnabled="False"
                  Text="{Binding SelectedIngredient.Calories}"/>
         <TextBlock Text="Protein" Grid.Column="1" Grid.Row="2"/>
         <TextBox x:Name="Protein" Grid.Column="2" Grid.Row="2"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 2, 0, 2"
                  IsEnabled="False"
                  Text="{Binding SelectedIngredient.Protein}"/>
         <TextBlock Text="Carbohydrates" Grid.Column="1" Grid.Row="3"/>
         <TextBox x:Name="Carbohydrates" Grid.Column="2" Grid.Row="3"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 2, 0, 2"
                  IsEnabled="False"
                  Text="{Binding SelectedIngredient.Carbohydrates}"/>
         <TextBlock Text="Fat" Grid.Column="1" Grid.Row="4"/>
         <TextBox x:Name="Fat" Grid.Column="2" Grid.Row="4"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 2, 0, 2"
                  IsEnabled="False"
                  Text="{Binding SelectedIngredient.Fat}"/>
         <TextBlock Text="Sugar" Grid.Column="1" Grid.Row="5"/>
         <TextBox x:Name="Sugar" Grid.Column="2" Grid.Row="5"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 2, 0, 2"
                  IsEnabled="False"
                  Text="{Binding SelectedIngredient.Sugar}"/>
         <TextBlock Text="Salt" Grid.Column="1" Grid.Row="6"/>
         <TextBox x:Name="Salt" Grid.Column="2" Grid.Row="6"
                  TextAlignment="Center"
                  Width="80"
-                 Margin="8, 0, 0, 0"
+                 Margin="8, 2, 0, 2"
                  IsEnabled="False"
                 Text="{Binding SelectedIngredient.Salt}"/>
         <TextBlock Text="Current stock" Grid.Column="1" Grid.Row="7"/>
         <TextBox x:Name="NumberInStock" Grid.Column="2" Grid.Row="7"
                 TextAlignment="Center"
                 Width="80"
-                Margin="8, 0, 0, 0"
+                Margin="8, 2, 0, 0"
                 IsEnabled="False"
                 Text="{Binding SelectedIngredient.NumberInStock}"/>
         <Button x:Name="btnEditSave" Content="Edit" Grid.Column="5" Grid.Row="9"
-                Click="btnEditSave_Click" Width="80" Margin="2, 0, 0, 0">
+                Click="btnEditSave_Click" Width="80" Margin="2, 0, 0, 4">
             
         </Button>
         <Button x:Name="btnUndo" Content="Undo" Grid.Column="4" Grid.Row="9"
-                 Click="btnUndo_Click" Width="80" IsEnabled="False" Margin="0, 0, 2, 0">
+                 Click="btnUndo_Click" Width="80" IsEnabled="False" Margin="0, 0, 2, 4">
 
         </Button>
     </Grid>

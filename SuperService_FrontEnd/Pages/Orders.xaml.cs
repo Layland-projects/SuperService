@@ -49,8 +49,11 @@ namespace SuperService_FrontEnd.Pages
             if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
             {
                 var order = (Order)((ListView)sender).SelectedItem;
-                _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
-                AttachSources();
+                if (order != null)
+                {
+                    _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
+                    AttachSources();
+                }
             }
         }
 
@@ -59,8 +62,11 @@ namespace SuperService_FrontEnd.Pages
             if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
             {
                 var order = (Order)((ListView)sender).SelectedItem;
-                _oHelper.UpdateOrderStatus(order, OrderStatusValues.ReadyToCollect);
-                AttachSources();
+                if (order != null)
+                {
+                    _oHelper.UpdateOrderStatus(order, OrderStatusValues.ReadyToCollect);
+                    AttachSources();
+                }
             }
         }
         private void InProgress_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
@@ -68,8 +74,11 @@ namespace SuperService_FrontEnd.Pages
             if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
             {
                 var order = (Order)((ListView)sender).SelectedItem;
-                _oHelper.UpdateOrderStatus(order, OrderStatusValues.OrderPlaced);
-                AttachSources();
+                if (order != null)
+                {
+                    _oHelper.UpdateOrderStatus(order, OrderStatusValues.OrderPlaced);
+                    AttachSources();
+                }
             }
         }
         private void ReadyToCollect_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -77,8 +86,11 @@ namespace SuperService_FrontEnd.Pages
             if (_loggedInUser.UserType.UserTypeID != UserTypeValues.KitchenStaff.UserTypeID)
             {
                 var order = (Order)((ListView)sender).SelectedItem;
-                _oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
-                AttachSources();
+                if (order != null)
+                {
+                    _oHelper.UpdateOrderStatus(order, OrderStatusValues.Completed);
+                    AttachSources();
+                }
             }
         }
 
@@ -87,8 +99,11 @@ namespace SuperService_FrontEnd.Pages
             if (_loggedInUser.UserType.UserTypeID != UserTypeValues.Server.UserTypeID)
             {
                 var order = (Order)((ListView)sender).SelectedItem;
-                _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
-                AttachSources();
+                if (order != null)
+                {
+                    _oHelper.UpdateOrderStatus(order, OrderStatusValues.InProcess);
+                    AttachSources();
+                }
             }
         }
         public void AttachSources()

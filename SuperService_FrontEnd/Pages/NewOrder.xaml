@@ -10,7 +10,7 @@
     <Page.Resources>
         <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
     </Page.Resources>
-    <Grid Background="AliceBlue">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="auto"/>
@@ -26,6 +26,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
+        <Border CornerRadius="10" Background="AliceBlue" BorderBrush="AliceBlue" BorderThickness="1" Grid.Column="0" Grid.ColumnSpan="10" Grid.Row="0" Grid.RowSpan="10"/>
         <TextBlock Text="Menu" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="0, 0, 3, 0"/>
         <ListView x:Name="Menu" ItemsSource="{Binding Path=MenuItems}" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="0, 0, 3, 0"
                   MouseDoubleClick="Menu_MouseDoubleClick" MouseRightButtonUp="DisplayItemInfo">

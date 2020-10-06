@@ -78,9 +78,13 @@ namespace SuperService_FrontEnd.Pages
         {
             if ((string)btnEditSave.Content == "Save")
             {
+                MessageBox.Show($"{SelectedIngredient.Name} stock updated", "Success!");
                 ((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content).RefreshIngredients();
             }
             ((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content)._stockList.IsEnabled = !((Stock)((Frame)((MainWindow)App.Current.MainWindow)._frame).Content)._stockList.IsEnabled;
+            ((MainWindow)App.Current.MainWindow).btnNewOrder.IsEnabled = !((MainWindow)App.Current.MainWindow).btnNewOrder.IsEnabled;
+            ((MainWindow)App.Current.MainWindow).btnLogout.IsEnabled = !((MainWindow)App.Current.MainWindow).btnLogout.IsEnabled;
+            ((MainWindow)App.Current.MainWindow).btnOrders.IsEnabled = !((MainWindow)App.Current.MainWindow).btnOrders.IsEnabled;
             btnUndo.IsEnabled = !btnUndo.IsEnabled;
             NumberInStock.IsEnabled = !NumberInStock.IsEnabled;
             btnEditSave.Content = (string)btnEditSave.Content == "Edit" ? "Save" : "Edit";

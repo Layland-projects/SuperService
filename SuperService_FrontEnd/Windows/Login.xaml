@@ -10,32 +10,39 @@
     <Window.Resources>
         <ResourceDictionary Source="\Resources\GlobalStyles.xaml"/>
     </Window.Resources>
-    <Grid>
+    <Grid Background="LightSkyBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <Viewbox Stretch="Uniform" Grid.Column="2" Grid.Row="1">
-            <TextBlock Text="Login" TextAlignment="Center" FontSize="20"/>
-        </Viewbox>
-        <ComboBox x:Name="cbUsername" ItemsSource="{Binding Path=Users}" Grid.Column="2" Grid.Row="3"
+
+        <Border BorderThickness="1" BorderBrush="White" CornerRadius="10" Background="White" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="6" Margin="-10, 0, -10, 0"/>
+        <StackPanel Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2">
+            <Viewbox Stretch="Uniform" >
+                <TextBlock Text="Login" TextAlignment="Center" FontSize="20"/>
+            </Viewbox>
+            <Separator Background="LightSkyBlue" />
+        </StackPanel>
+        <ComboBox x:Name="cbUsername" ItemsSource="{Binding Path=Users}" Grid.Column="2" Grid.Row="4"
                   DisplayMemberPath="Username" SelectionChanged="cbUsername_SelectionChanged">
-            
         </ComboBox>
-        <Button x:Name="btnLogin" Grid.Column="3" Grid.Row="3" Click="btnLogin_Click" Height="30" Width="60" HorizontalAlignment="Left" Margin="5, 0, 0, 0">
+        <Button x:Name="btnLogin" Grid.Column="3" Grid.Row="4" Click="btnLogin_Click" Height="30" Width="60" HorizontalAlignment="Left" Margin="5, 0, 0, 0">
             <Button.Content>
                 <Viewbox Stretch="Uniform" VerticalAlignment="Center">
                     <TextBlock Text="Login"/>
