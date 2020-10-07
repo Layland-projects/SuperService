@@ -149,3 +149,18 @@ Overall I'm very pleased with what happened this sprint, I was able to resolve a
 ##### What to try next?
 
 Next I would like to try back end development with a 'rapid prototyping' style and see if it is as effective as it was for front end development.
+
+### <u>Project retrospective</u>
+
+#### What I liked?
+
+I really enjoyed the freedoms of the project, the freedom in what I could do my project on and also the freedom of how I could manage my own time.
+
+#### What I learned?
+
+I learned a few individual take away points about entity framework but overall the project reinforced the process of breaking down your work in to small manageable chunks rather than trying to work on too broad a task.
+
+#### What I lacked?
+
+I would say I lacked the ability to initially contain my excitement of using new technologies and design patterns and in some respects bit off more than I could chew in term of trying to implement design patterns where it wouldn't necessarily be appropriate. Moving forward I would do that at a refactoring stage rather than straight away.
+
