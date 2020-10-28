@@ -9,12 +9,16 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class ItemService
     {
+        SuperServiceContext _db = new SuperServiceContext();
+        public ItemService() { }
+        public ItemService(SuperServiceContext db)
+        {
+            _db = db;
+        }
+
         public IEnumerable<Item> GetAllItems()
         {
-            using (var db = new SuperServiceContext())
-            {
-                return db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).AsNoTracking().ToList();
-            }
+            return _db.Items.Include(x => x.ItemIngredients).ThenInclude(x => x.Ingredient).AsNoTracking().ToList();
         }
 
         public Item GetItemByID(int id)
@@ -24,21 +28,15 @@ namespace SuperService_BackEnd.ServiceUtilities
 
         public void AddNewItem(Item item)
         {
-            using (var db = new SuperServiceContext())
-            {
-                db.Items.Add(item);
-                db.SaveChanges();
-            }
+            _db.Items.Add(item);
+            _db.SaveChanges();
         }
 
         public void RemoveItem(Item item)
         {
-            using (var db = new SuperServiceContext())
-            {
-                var itemInDb = db.Items.Where(x => x.ItemID == item.ItemID);
-                db.Items.RemoveRange(itemInDb);
-                db.SaveChanges();
-            }
+            var itemInDb = _db.Items.Where(x => x.ItemID == item.ItemID);
+            _db.Items.RemoveRange(itemInDb);
+            _db.SaveChanges();
         }
     }
 }

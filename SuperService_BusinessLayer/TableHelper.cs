@@ -10,7 +10,12 @@ namespace SuperService_BusinessLayer
 {
     public class TableHelper
     {
-        TableService _serv = new TableService();
+        TableService _serv;
+        public TableHelper(SuperServiceContext db)
+        {
+            _serv = new TableService(db);
+        }
+
         public IEnumerable<Table> GetAllTablesOrderedByNumber() => _serv.GetAllTables().OrderBy(x => x.TableNumber);
         public Table GetTableByID(int id) => _serv.GetTableByID(id);
         public Table GetTableByTableNumber(int number) => _serv.GetTableByTableNumber(number);

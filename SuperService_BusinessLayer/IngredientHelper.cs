@@ -7,12 +7,19 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using SuperService_BackEnd.Interfaces;
 
 namespace SuperService_BusinessLayer
 {
     public class IngredientHelper
     {
-        IngredientService _serv = new IngredientService();
+        IIngredientService _serv = new IngredientService();
+
+        public IngredientHelper() { }
+        public IngredientHelper(IIngredientService ingredientService) 
+        {
+            _serv = ingredientService;
+        }
 
         public IEnumerable<Ingredient> GetAllIngredientsWithDistinctNames()
         {

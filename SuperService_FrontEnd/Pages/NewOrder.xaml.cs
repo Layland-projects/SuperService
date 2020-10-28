@@ -1,4 +1,5 @@
-﻿using SuperService_BackEnd.Models;
+﻿using SuperService_BackEnd;
+using SuperService_BackEnd.Models;
 using SuperService_BusinessLayer;
 using SuperService_FrontEnd.GUIHelpers;
 using SuperService_FrontEnd.Windows;
@@ -60,7 +61,7 @@ namespace SuperService_FrontEnd.Pages
         {
             _newOrder = new Order();
             _iHelper = new ItemHelper();
-            _tHelper = new TableHelper();
+            _tHelper = new TableHelper(new SuperServiceContext());
             _oHelper = new OrderHelper();
             MenuItems = _iHelper.GetAllItemsOrderedByAvailability().ToList();
             _historicItems = _iHelper.GetAllItemsOrderedByAvailability().ToList();

@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NUnit.Framework;
+using SuperService_BackEnd;
 using SuperService_BackEnd.Models;
 using SuperService_BusinessLayer;
 using System;
@@ -11,7 +14,7 @@ namespace SuperService_BusinessLayer.Tests
     [TestFixture]
     public class TableHelperTests
     {
-        TableHelper tHelper = new TableHelper();
+        TableHelper tHelper = new TableHelper(new SuperServiceContext(new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName: "Fake_DB").Options));
         [TearDown]
         public void TearDown()
         {

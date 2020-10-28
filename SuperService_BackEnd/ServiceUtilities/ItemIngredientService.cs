@@ -9,13 +9,18 @@ namespace SuperService_BackEnd.ServiceUtilities
 {
     public class ItemIngredientService
     {
+        SuperServiceContext _db = new SuperServiceContext();
+
+        public ItemIngredientService() { }
+        public ItemIngredientService(SuperServiceContext db)
+        {
+            _db = db;
+        }
+
         public void AddItemIngredient(ItemIngredients itemIngredients)
         {
-            using (var db = new SuperServiceContext())
-            {
-                db.ItemIngredients.Add(itemIngredients);
-                db.SaveChanges();
-            }
+            _db.ItemIngredients.Add(itemIngredients);
+            _db.SaveChanges();
         }
         public void AddItemIngredients(IEnumerable<ItemIngredients> itemIngredients)
         {
@@ -26,11 +31,8 @@ namespace SuperService_BackEnd.ServiceUtilities
         }
         public void RemoveItemIngredientsByItemID(int id)
         {
-            using (var db = new SuperServiceContext())
-            {
-                db.ItemIngredients.RemoveRange(db.ItemIngredients.Where(x => x.ItemID == id));
-                db.SaveChanges();
-            }
+            _db.ItemIngredients.RemoveRange(_db.ItemIngredients.Where(x => x.ItemID == id));
+            _db.SaveChanges();
         }
     }
 }

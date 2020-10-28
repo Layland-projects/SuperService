@@ -1,5 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using NUnit.Framework.Constraints;
+using SuperService_BackEnd;
 using SuperService_BackEnd.Models;
+using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
 using System;
 using System.Collections.Generic;
@@ -8,12 +12,12 @@ using System.Text;
 
 namespace SuperService_BusinessLayer.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     public class IngredientHelperTests
     {
         Ingredient ingredient;
         Ingredient ingredient2;
-        IngredientHelper _iHelper = new IngredientHelper();
+        IngredientHelper _iHelper = new IngredientHelper(new IngredientService(new SuperServiceContext(new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName: "Fake_DB").Options)));
         [SetUp]
         public void SetUp()
         {

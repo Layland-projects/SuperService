@@ -20,8 +20,14 @@ namespace SuperService_BackEnd
         public DbSet<OrderItems> OrderItems { get; set; }
         public DbSet<OrderStatus> OrderStatuses { get; set; }
 
+        public SuperServiceContext() : base(new DbContextOptionsBuilder().UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SuperService;").Options)
+        {
+            
+        }
+        public SuperServiceContext(DbContextOptions options) : base(options)
+        {
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SuperService;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

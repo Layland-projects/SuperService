@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
+using SuperService_BackEnd.Interfaces;
 using SuperService_BackEnd.Models;
 using System;
 using System.Collections.Generic;
@@ -10,75 +11,65 @@ using System.Text;
 
 namespace SuperService_BackEnd.ServiceUtilities
 {
-    public class IngredientService
+    public class IngredientService : IIngredientService
     {
+        SuperServiceContext _db = new SuperServiceContext();
+
+        public IngredientService() { }
+        public IngredientService(SuperServiceContext db)
+        {
+            _db = db;
+        }
         public IEnumerable<Ingredient> GetAllIngredients()
         {
-            using (var db = new SuperServiceContext())
-            {
-                return db.Ingredients.AsNoTracking().ToList();
-            }
+            return _db.Ingredients.AsNoTracking().ToList();
         }
-        public Ingredient GetIngredientByID(int id) => GetAllIngredients().Where(x => x.IngredientID == id).FirstOrDefault(); 
+        public Ingredient GetIngredientByID(int id) => GetAllIngredients().Where(x => x.IngredientID == id).FirstOrDefault();
 
         public IEnumerable<Ingredient> GetIngredientsByName(string name) => GetAllIngredients().Where(x => x.Name == name);
 
         public void AddNewIngredient(Ingredient ingredient)
         {
-            using (var db = new SuperServiceContext())
-            {
-                db.Ingredients.Add(ingredient);
-                db.SaveChanges();
-            }
+            _db.Ingredients.Add(ingredient);
+            _db.SaveChanges();
         }
 
         public void RemoveIngredient(Ingredient ingredient)
         {
-            using (var db = new SuperServiceContext())
+            var dbIngredient = _db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+            if (dbIngredient != null)
             {
-                var dbIngredient = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
-                if (dbIngredient != null)
-                {
-                    db.Ingredients.Remove(dbIngredient);
-                    db.SaveChanges();
-                }
+                _db.Ingredients.Remove(dbIngredient);
+                _db.SaveChanges();
             }
         }
 
         public void DecrementStockForIngredient(Ingredient ingredient)
         {
-            using (var db = new SuperServiceContext())
-            {
-                var ingInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
-                ingInDb.NumberInStock--;
-                db.SaveChanges();
-            }
+            var ingInDb = _db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+            ingInDb.NumberInStock--;
+            _db.SaveChanges();
         }
 
         public void IncrementStockForIngredient(Ingredient ingredient)
         {
-            using (var db = new SuperServiceContext())
-            {
-                var ingInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
-                ingInDb.NumberInStock++;
-                db.SaveChanges();
-            }
+
+            var ingInDb = _db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+            ingInDb.NumberInStock++;
+            _db.SaveChanges();
         }
 
         public void UpdateIngredient(Ingredient ingredient)
         {
-            using (var db = new SuperServiceContext())
+            var ingredientInDb = _db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
+            foreach (var prop in ingredient.GetType().GetProperties())
             {
-                var ingredientInDb = db.Ingredients.Where(x => x.IngredientID == ingredient.IngredientID).FirstOrDefault();
-                foreach (var prop in ingredient.GetType().GetProperties())
+                if (prop.Name != "IngredientID" && prop.CanWrite)
                 {
-                    if (prop.Name != "IngredientID" && prop.CanWrite)
-                    {
-                        prop.SetValue(ingredientInDb, prop.GetValue(ingredient));
-                    }
+                    prop.SetValue(ingredientInDb, prop.GetValue(ingredient));
                 }
-                db.SaveChanges();
             }
+            _db.SaveChanges();
         }
     }
 }

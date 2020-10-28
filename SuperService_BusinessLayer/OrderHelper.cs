@@ -1,4 +1,5 @@
 ﻿using SuperService_BackEnd;
+using SuperService_BackEnd.Interfaces;
 using SuperService_BackEnd.Migrations;
 using SuperService_BackEnd.Models;
 using SuperService_BackEnd.ServiceUtilities;
@@ -11,11 +12,31 @@ namespace SuperService_BusinessLayer
 {
     public class OrderHelper
     {
-        IngredientHelper _iHelper = new IngredientHelper();
-        OrderService _oService = new OrderService();
-        OrderItemsService _oIService = new OrderItemsService();
+        IOrderService _oService = new OrderService();
+        IOrderItemsService _oIService = new OrderItemsService();
 
-        public Order GetOrderByOrderID(int id) => _oService.GetOrderByOrderID(id);
+        public OrderHelper()
+        {
+
+        }
+
+        public OrderHelper(IOrderService orderService, IOrderItemsService orderItemsService)
+        {
+            _oService = orderService;
+            _oIService = orderItemsService;
+        }
+
+        public Order GetOrderByOrderID(int id)
+        {
+            try
+            {
+                return _oService.GetOrderByOrderID(id);
+            }
+            catch (TimeoutException)
+            {
+                return null;
+            }
+        }
         public IEnumerable<Order> GetOrdersByTableNumber(int number) => _oService.GetOrdersByTableNumber(number);
         public IEnumerable<Order> GetOrdersByTableID(int id) => _oService.GetOrdersByTableID(id);
         public IEnumerable<Order> GetAllNoneCompletedOrders() => _oService.GetAllNoneCompletedOrders();

@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.EntityFrameworkCore;
+using Moq;
+using NUnit.Framework;
+using SuperService_BackEnd;
+using SuperService_BackEnd.Interfaces;
 using SuperService_BackEnd.Models;
 using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
@@ -13,10 +17,10 @@ namespace SuperService_BusinessLayer.Tests
     [TestFixture]
     public class OrderHelperTests
     {
-        ItemHelper iHelper = new ItemHelper();
-        IngredientHelper ingHelper = new IngredientHelper();
-        TableHelper tHelper = new TableHelper();
-        OrderHelper oHelper = new OrderHelper();
+        SuperServiceContext db;
+        ItemHelper iHelper;
+        TableHelper tHelper;
+        OrderHelper oHelper;
         Table table;
         Order order;
         List<Item> items;
@@ -24,6 +28,10 @@ namespace SuperService_BusinessLayer.Tests
         [SetUp]
         public void SetUp()
         {
+            db = new SuperServiceContext(new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName: "Fake_DB").Options);
+            iHelper = new ItemHelper(db);
+            tHelper = new TableHelper(db);
+            oHelper = new OrderHelper(new OrderService(db), new OrderItemsService(db));
             if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
             {
                 var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
@@ -43,36 +51,50 @@ namespace SuperService_BusinessLayer.Tests
             });
             table = tHelper.GetTableByTableNumber(1000);
             order = new Order { Table = table };
+            if (iHelper.GetAllItemsOrderedByAvailability().FirstOrDefault() == null)
+            {
+                iHelper.AddNewItem(new Item { Cost = 5, Name = "TestSandwich" }, new List<Ingredient>
+                {
+                new Ingredient { Name = "TestBread", Calories = 230, Carbohydrates = 15, Fat = 1, Protein = 1, Salt = 5, Sugar = 5, NumberInStock = 10 },
+                new Ingredient { Name = "TestCheese", Calories = 150, Carbohydrates = 1, Fat = 10, Protein = 2, Salt = 5, Sugar = 3, NumberInStock = 10 }
+                });
+                iHelper.AddNewItem(new Item { Cost = 8, Name = "TestStew" }, new List<Ingredient>
+                {
+                new Ingredient { Name = "TestCabbage", Calories = 60, Carbohydrates = 15, Fat = 1, Protein = 1, Salt = 5, Sugar = 5, NumberInStock = 10 },
+                new Ingredient { Name = "TestPotatoes", Calories = 300, Carbohydrates = 60, Fat = 3, Protein = 2, Salt = 5, Sugar = 3, NumberInStock = 10 },
+                new Ingredient { Name = "TestCarrots", Calories = 100, Carbohydrates = 20, Fat = 10, Protein = 2, Salt = 5, Sugar = 3, NumberInStock = 0 },
+                });
+            }
+            
             items = new List<Item>
             {
                 iHelper.GetAllItemsOrderedByAvailability().First(),
-                iHelper.GetAllItemsOrderedByAvailability().First(),
-                iHelper.GetAllItemsOrderedByAvailability().First()
+                iHelper.GetAllItemsOrderedByAvailability().Last()
             };
+            db.OrderStatuses.Add(new OrderStatus() { Name = "Order Placed" });
+            db.SaveChanges();
         }
         [TearDown]
         public void TearDown()
         {
-            if (oHelper.GetOrdersByTableNumber(1000).Count() > 0)
-            {
-                var oList = oHelper.GetOrdersByTableNumber(1000).ToList();
-                foreach (var o in oList)
-                {
-                    oHelper.DeleteOrder(o);
-                }
-            }
-            if (tHelper.GetTableByTableNumber(1000) != null)
-            {
-                tHelper.DeleteTableByTableNumber(1000);
-            }
+            db.Dispose();
         }
 
         [Test]
-        public void AddNewOrderTest()
+        public void AddNewOrder_CreatesNewOrderInOrdersTable()
         {
             oHelper.AddNewOrder(order, items);
             Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Count() == 1);
-            Assert.IsTrue(oHelper.GetOrdersByTableID(table.ID).Where(x => x.OrderStatus.OrderStatusID == OrderStatusService.OrderPlaced.OrderStatusID).Count() == 1);
+        }
+
+        [Test]
+        public void AddNewOrder_UpdatesOrdersStatusToOrderPlaced()
+        {
+            var oService = new Mock<IOrderService>();
+            var oIService = new Mock<IOrderItemsService>();
+            oHelper = new OrderHelper(oService.Object, oIService.Object);
+            oHelper.AddNewOrder(order, items);
+            Assert.That(order.OrderStatusID, Is.EqualTo(1));
         }
 
         [Test]
@@ -108,6 +130,11 @@ namespace SuperService_BusinessLayer.Tests
         [Test]
         public void GetOrdersByTableNumberTest()
         {
+            var oService = new Mock<IOrderService>(MockBehavior.Strict);
+            var oIService = new Mock<IOrderItemsService>();
+            oService.Setup(x => x.GetOrdersByTableNumber(1000)).Returns(new List<Order> { new Order { OrderID = 1, OrderStatusID = 1, Table = table } });
+            oService.Setup(x => x.AddNewOrder(order));
+            oHelper = new OrderHelper(oService.Object, oIService.Object);
             oHelper.AddNewOrder(order, items);
             Assert.IsTrue(oHelper.GetOrdersByTableNumber(1000).Count() > 0);
         }
@@ -115,8 +142,12 @@ namespace SuperService_BusinessLayer.Tests
         [Test]
         public void GetOrdersByTableNumberTest_WithTableNumberThatDoesntExist()
         {
+            var oService = new Mock<IOrderService>();
+            var oIService = new Mock<IOrderItemsService>();
+            oService.Setup(x => x.GetOrdersByTableNumber(int.MinValue)).Returns(new List<Order>());
+            oHelper = new OrderHelper(oService.Object, oIService.Object);
             oHelper.AddNewOrder(order, items);
-            Assert.IsTrue(oHelper.GetOrdersByTableNumber(int.MaxValue).Count() == 0);
+            Assert.IsTrue(oHelper.GetOrdersByTableNumber(int.MinValue).Count() == 0);
         }
 
         [Test]
@@ -133,6 +164,17 @@ namespace SuperService_BusinessLayer.Tests
         public void GetOrderByOrderIDTest_WithIDDoesntExistInDB()
         {
             Assert.Null(oHelper.GetOrderByOrderID(int.MaxValue));
+        }
+
+        [Test]
+        public void GetOrderByOrderIDTest_ReturnsNullWhenTimeout()
+        {
+            var oService = new Mock<IOrderService>();
+            var oIService = new Mock<IOrderItemsService>();
+            oService.Setup(x => x.GetOrderByOrderID(It.IsAny<int>())).Throws(new TimeoutException());
+            oHelper = new OrderHelper(oService.Object, oIService.Object);
+            Assert.That(oHelper.GetOrderByOrderID(1), Is.Null);
+            //is it possible to test that a return is an instance of an object, WITH default properties?
         }
 
         [Test]

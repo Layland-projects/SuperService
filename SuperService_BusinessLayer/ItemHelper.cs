@@ -13,6 +13,14 @@ namespace SuperService_BusinessLayer
         ItemService _serv = new ItemService();
         IngredientService _ingServ = new IngredientService();
         ItemIngredientService _iIServ = new ItemIngredientService();
+
+        public ItemHelper() { }
+        public ItemHelper(SuperServiceContext db)
+        {
+            _serv = new ItemService(db);
+            _ingServ = new IngredientService(db);
+            _iIServ = new ItemIngredientService(db);
+        }
         public IEnumerable<Item> GetAllItemsOrderedByAvailability() => _serv.GetAllItems().OrderByDescending(x => x.CanOrder).ThenBy(x => x.Name);
         public Item GetItemByID(int id) => _serv.GetItemByID(id);
 

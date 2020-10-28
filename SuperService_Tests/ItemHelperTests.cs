@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.EntityFrameworkCore;
+using NUnit.Framework;
+using SuperService_BackEnd;
 using SuperService_BackEnd.Models;
+using SuperService_BackEnd.ServiceUtilities;
 using SuperService_BusinessLayer;
 using System;
 using System.Collections.Generic;
@@ -11,8 +14,9 @@ namespace SuperService_BusinessLayer.Tests
     [TestFixture]
     public class ItemHelperTests
     {
-        ItemHelper iHelper = new ItemHelper();
-        IngredientHelper ingHelper = new IngredientHelper();
+        static SuperServiceContext db = new SuperServiceContext(new DbContextOptionsBuilder().UseInMemoryDatabase(databaseName: "Fake_DB").Options);
+        ItemHelper iHelper = new ItemHelper(db);
+        IngredientHelper ingHelper = new IngredientHelper(new IngredientService(db));
         [SetUp]
         public void SetUp()
         {
